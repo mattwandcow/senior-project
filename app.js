@@ -1,0 +1,79 @@
+const path = require('path'); // for getting project directory path
+const http = require('http'); // imported for creating a server
+
+const express = require('express');
+const session = require('express-session');
+
+const dotenv = require('dotenv');
+dotenv.config(); 
+const PORT = process.env.PORT || 5000; //Run on Port variable, or 5000
+//what do these do again
+const bodyParser = require('body-parser');
+
+
+
+/* ##Cors Stuff
+const cors = require('cors');
+const corsOptions = {
+	origin: "https://cse341-g4.herokuapp.com/",
+	optionsSuccessStatus: 200
+  };
+//*/
+
+//const flash = require('connect-flash'); //this is a message box library
+
+//const csrf = require('csurf');
+//const csrfProtection = csrf();
+
+//## need to figure out the databases soon
+const app = express();
+
+app.set('view engine', 'ejs'); // change based on engine: pug, hbs, ejs
+app.set('views', 'views');     // default where to find templates
+
+//##Cors
+//app.use(cors(corsOptions));
+
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images'))); 
+// Line says "If we have a request that starts with '/images' THEN serve it using the 'static' method." 
+//		We use the 'static' method as described in the notes above to make our 'images' folder a public folder 
+//		that people can read-only access.
+
+const Options = {
+	useUnifiedTopology: true,
+	useNewURLParser: true,
+	family: 4
+  };
+
+// app.use(
+// 	session(
+// 	  {
+// 		secret: 'my secret',
+// 		resave: false,
+// 		saveUninitialized: false,
+// 		store: store
+// 	  }
+// 	)
+//   );
+//app.use(csrfProtection); // We now add our Cross-Site Request Forgery (csrf) protection. Must be enabled after the session is set
+
+// app.use((req, res, next) => {
+// // Used for user authentication. Can reuse later.
+// res.locals.isAuthenticated = req.session.isLoggedIn;
+// res.locals.csrfToken = req.csrfToken();
+// next();
+//   });
+
+const errorController = require('./controllers/errors');
+const adminRoutes = require('./routes/admin_routes')
+const baseRoutes = require('./routes/base_routes')
+
+app.use('/admin', adminRoutes);
+app.use(baseRoutes);
+app.use(errorController.get404);
+app.use(errorController.get500);
+
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));
