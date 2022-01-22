@@ -14,3 +14,10 @@ exports.getAbout = (req, res, next) => {
 	path: '/'
    });
 };
+exports.getToDo = (req, res, next) => {
+	console.log("Trace: Arrived at Todo Page");
+	res.render('base/todo',
+	{ pageTitle: 'Project Todo List',
+	path: '/'
+   });
+};

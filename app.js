@@ -5,12 +5,21 @@ const express = require('express');
 const session = require('express-session');
 
 const dotenv = require('dotenv');
-dotenv.config(); 
+dotenv.config();
 const PORT = process.env.PORT || 5000; //Run on Port variable, or 5000
+
 //what do these do again
 const bodyParser = require('body-parser');
 
-
+const {
+	Pool
+} = require('pg');
+const pg_pool = new Pool({
+	connectionString: process.env.DATABASE_URL,
+	ssl: {
+		rejectUnauthorized: false
+	}
+});
 
 /* ##Cors Stuff
 const cors = require('cors');
@@ -29,15 +38,18 @@ const corsOptions = {
 const app = express();
 
 app.set('view engine', 'ejs'); // change based on engine: pug, hbs, ejs
-app.set('views', 'views');     // default where to find templates
+app.set('views', 'views'); // default where to find templates
 
 //##Cors
 //app.use(cors(corsOptions));
 
-
+app.use(bodyParser.urlencoded({
+	extended: false
+  }));
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/images', express.static(path.join(__dirname, 'images'))); 
+app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/css', express.static(path.join(__dirname, 'css')));
 // Line says "If we have a request that starts with '/images' THEN serve it using the 'static' method." 
 //		We use the 'static' method as described in the notes above to make our 'images' folder a public folder 
 //		that people can read-only access.
@@ -46,7 +58,7 @@ const Options = {
 	useUnifiedTopology: true,
 	useNewURLParser: true,
 	family: 4
-  };
+};
 
 // app.use(
 // 	session(
@@ -69,9 +81,25 @@ const Options = {
 
 const errorController = require('./controllers/errors');
 const adminRoutes = require('./routes/admin_routes')
+const authRoutes = require('./routes/auth_routes')
 const baseRoutes = require('./routes/base_routes')
 
+app.use('/db', async (req, res) => {
+	try {
+		const client = await pg_pool.connect();
+		const result = await client.query('SELECT * FROM test_table');
+		const results = {
+			'results': (result) ? result.rows : null
+		};
+		res.render('base/db', results);
+		client.release();
+	} catch (err) {
+		console.error(err);
+		res.send("Error " + err);
+	}
+})
 app.use('/admin', adminRoutes);
+app.use(authRoutes);
 app.use(baseRoutes);
 app.use(errorController.get404);
 app.use(errorController.get500);
