@@ -11,16 +11,6 @@ const PORT = process.env.PORT || 5000; //Run on Port variable, or 5000
 //what do these do again
 const bodyParser = require('body-parser');
 
-const {
-	Pool
-} = require('pg');
-const pg_pool = new Pool({
-	connectionString: process.env.DATABASE_URL,
-	ssl: {
-		rejectUnauthorized: false
-	}
-});
-
 /* ##Cors Stuff
 const cors = require('cors');
 const corsOptions = {
