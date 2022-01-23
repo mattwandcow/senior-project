@@ -27,6 +27,25 @@ const corsOptions = {
 //## need to figure out the databases soon
 const app = express();
 
+app.use(
+	session({
+		secret: 'wavelength',
+		resave: false,
+		saveUninitialized: false,
+		cookie: {
+		//	secure: true //when using local host, this is broken. Recommended for https pages, tho
+		secure: false
+		}
+	})
+)
+
+app.use((req, res, next) => {
+	// Used for user authentication. Can reuse later.
+	res.locals.isAuthenticated = req.session.isLoggedIn;
+	//res.locals.csrfToken = req.csrfToken();
+	next();
+});
+
 app.set('view engine', 'ejs'); // change based on engine: pug, hbs, ejs
 app.set('views', 'views'); // default where to find templates
 
@@ -35,7 +54,7 @@ app.set('views', 'views'); // default where to find templates
 
 app.use(bodyParser.urlencoded({
 	extended: false
-  }));
+}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -50,24 +69,8 @@ const Options = {
 	family: 4
 };
 
-// app.use(
-// 	session(
-// 	  {
-// 		secret: 'my secret',
-// 		resave: false,
-// 		saveUninitialized: false,
-// 		store: store
-// 	  }
-// 	)
-//   );
 //app.use(csrfProtection); // We now add our Cross-Site Request Forgery (csrf) protection. Must be enabled after the session is set
 
-// app.use((req, res, next) => {
-// // Used for user authentication. Can reuse later.
-// res.locals.isAuthenticated = req.session.isLoggedIn;
-// res.locals.csrfToken = req.csrfToken();
-// next();
-//   });
 
 const errorController = require('./controllers/errors');
 const adminRoutes = require('./routes/admin_routes')

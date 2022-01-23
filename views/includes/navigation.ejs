@@ -7,6 +7,10 @@
 		Review some movies
 		Profile
 		<a href='/about'>About this project</a>
+		<% if(isAuthenticated) { %>
+		<a href='/logout'>Logout</a>
+		<% } else { %>
 		<a href='/login'>Login</a>
+		<% } %>
 	</nav>
 </header>
