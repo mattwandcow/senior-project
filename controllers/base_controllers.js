@@ -2,8 +2,8 @@
 
 exports.getLanding = (req, res, next) => {
 	console.log("Trace: Arrived at Landing Page");
-	console.log(req.session);
-	console.log(res.locals);
+	// console.log(req.session);
+	// console.log(res.locals);
 	res.render('base/landing',
 	{ pageTitle: 'Matt Senior Project',
 	path: '/'

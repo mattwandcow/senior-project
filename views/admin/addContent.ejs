@@ -1,0 +1,14 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <form action="/admin/add-content" method="POST">
+		<label for="title">
+			Title
+			<input type="text" name="title">
+		</label>
+		<button type="submit">Add</button>
+	</form>
+
+<%- include('../includes/end.ejs') %>

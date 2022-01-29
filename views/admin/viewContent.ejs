@@ -1,0 +1,11 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <ul>
+		<% for (let i = 0; i<content.length;i++) {%>
+		<li> <%- content[i].title %> </li>
+	<%  }%>
+	</ul>
+<%- include('../includes/end.ejs') %>

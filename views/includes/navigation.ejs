@@ -1,6 +1,9 @@
 <header>
 	<button>Menu</button>
 	<nav>
+		<% if(isAdmin) {%>
+		<a href='/admin'>Admin Page</a>
+		<% } %>
 		<a href='/todo'>To Do list</a>
 		Get a reccomendation
 		pull up a specifc movie

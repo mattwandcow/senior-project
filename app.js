@@ -42,6 +42,7 @@ app.use(
 app.use((req, res, next) => {
 	// Used for user authentication. Can reuse later.
 	res.locals.isAuthenticated = req.session.isLoggedIn;
+	res.locals.isAdmin = req.session.isAdmin;
 	//res.locals.csrfToken = req.csrfToken();
 	next();
 });
