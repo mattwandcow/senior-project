@@ -49,6 +49,7 @@ exports.postLogin = (req, res, next) => {
 			if (err) {
 				return console.error('Error executing query', err.stack)
 			}
+			//need to add some checks to make sure there is a row returned?
 			if (pass == resp.rows[0].password_hash) {
 				console.log("Authenticated");
 				req.session.isLoggedIn = true;
@@ -59,7 +60,7 @@ exports.postLogin = (req, res, next) => {
 				req.session.user = email;
 
 				return req.session.save(err => {
-					console.log(err);
+					console.log("Session Save Error:"+err);
 					console.log("Saved Session");
 					res.redirect('/');
 				})
@@ -131,7 +132,7 @@ exports.postAddContent = (req, res, next) => {
 };
 exports.getViewContent = (req, res, next) => {
 	console.log("Trace: Arrived at View Content");
-	console.log(req.locals);
+	//console.log(req.locals);
 
 	pool.connect((err, client, release) => {
 		if (err) {
@@ -142,8 +143,7 @@ exports.getViewContent = (req, res, next) => {
 			if (err) {
 				return console.error('Error executing query', err.stack)
 			}
-			console.log(err);
-			console.log(resp.rows);
+			//console.log(resp.rows);
 			res.render('admin/viewContent', {
 				pageTitle: 'Matt Senior Project',
 				path: '/',

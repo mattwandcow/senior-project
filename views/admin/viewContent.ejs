@@ -3,9 +3,15 @@
 
 <body>
     <%- include('../includes/navigation.ejs') %>
-    <ul>
-		<% for (let i = 0; i<content.length;i++) {%>
-		<li> <%- content[i].title %> </li>
-	<%  }%>
-	</ul>
+    <table>
+<thead></thead>
+<tbody>
+
+	<% for (let i = 0; i<content.length;i++) {%>
+		<tr>
+			<td><a href="../content/<%-content[i].content_id%>"><%- content[i].title %></a></td> <td>Thumbs Up</td><td>Neutral</td><td>Thumbs Down</td>
+		</tr>
+		<%  }%>
+	</tbody>
+	</table>
 <%- include('../includes/end.ejs') %>

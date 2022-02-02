@@ -77,6 +77,8 @@ const errorController = require('./controllers/errors');
 const adminRoutes = require('./routes/admin_routes')
 const authRoutes = require('./routes/auth_routes')
 const baseRoutes = require('./routes/base_routes')
+const contentRoutes = require('./routes/content_routes')
+const shorthandRoutes = require('./routes/shorthand_routes')
 
 app.use('/db', async (req, res) => {
 	try {
@@ -95,6 +97,8 @@ app.use('/db', async (req, res) => {
 app.use('/admin', adminRoutes);
 app.use(authRoutes);
 app.use(baseRoutes);
+app.use(contentRoutes);
+app.use(shorthandRoutes);
 app.use(errorController.get404);
 app.use(errorController.get500);
 
