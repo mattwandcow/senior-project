@@ -1,0 +1,34 @@
+<%- include('../includes/head.ejs') %>
+
+<script>
+	function rate_button(user, contentID, marker) {
+		console.log(":"+contentID+":");
+		console.log(":"+user+":");
+		switch (marker) {
+			case 1:
+				fetch('/shorthand/rate/'+contentID+'/'+user+'/1')
+				break;
+			case 2:
+				fetch('/shorthand/rate/'+contentID+'/'+user+'/2')
+				break;
+			case 3:
+				fetch('/shorthand/rate/'+contentID+'/'+user+'/3')
+				break;
+		}
+		console.log('/shorthand/rate/'+contentID+'/'+user+'/');
+	}
+</script>
+
+</head>
+
+<body>
+	<%- include('../includes/navigation.ejs') %>
+	<h1>Welcome to the project</h1>
+	Title: <%- content.title %>
+	Blah blah blah details
+	<button onClick="rate_button( '<%- user %>','<%- content.content_id %>',1)">Up</button>
+	<button onClick="rate_button( '<%- user %>','<%- content.content_id %>',2)">Neutral</button>
+	<button onClick="rate_button( '<%- user %>','<%- content.content_id %>',3)">Down</button>
+	
+	Should show whichever the user has set
+	<%- include('../includes/end.ejs') %>
