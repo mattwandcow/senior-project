@@ -9,7 +9,12 @@
 
 	<% for (let i = 0; i<content.length;i++) {%>
 		<tr>
-			<td><a href="../content/<%-content[i].content_id%>"><%- content[i].title %></a></td> <td>Thumbs Up</td><td>Neutral</td><td>Thumbs Down</td>
+			<td><a href="../content/<%-content[i].content_id%>"><%- content[i].title %></a></td>
+			<td>Thumbs Up</td>
+			<td>Neutral</td>
+			<td>Thumbs Down</td>
+			<td> <%- content[i].count %> </td>
+			<td> <%- content[i].like_count/content[i].count %> </td>
 		</tr>
 		<%  }%>
 	</tbody>
