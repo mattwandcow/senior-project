@@ -49,23 +49,31 @@ exports.postLogin = (req, res, next) => {
 			if (err) {
 				return console.error('Error executing query', err.stack)
 			}
-			//need to add some checks to make sure there is a row returned?
-			if (pass == resp.rows[0].password_hash) {
-				console.log("Authenticated");
-				req.session.isLoggedIn = true;
-				if (resp.rows[0].access == 1) //isAdmin
-					req.session.isAdmin = true;
-				else
-					req.session.isAdmin = false;
-				req.session.user = email;
+			if (resp.rowCount == 1) {
+				//need to add some checks to make sure there is a row returned?
+				if (pass == resp.rows[0].password_hash) {
+					console.log("Authenticated");
+					req.session.isLoggedIn = true;
+					if (resp.rows[0].access == 1) //isAdmin
+						req.session.isAdmin = true;
+					else
+						req.session.isAdmin = false;
+					req.session.user = email;
 
-				return req.session.save(err => {
-					console.log("Session Save Error:"+err);
-					console.log("Saved Session");
-					res.redirect('/');
-				})
+					return req.session.save(err => {
+						console.log("Session Save Error:" + err);
+						console.log("Saved Session");
+						res.redirect('/');
+					})
+				} else {
+					console.log("Password Mismatch?");
+					res.render('auth/getLogin', {
+						pageTitle: 'Matt Senior Project',
+						path: '/'
+					});
+				}
 			} else {
-				console.log("Password Mismatch?");
+				console.log("No such user in DB");
 				res.render('auth/getLogin', {
 					pageTitle: 'Matt Senior Project',
 					path: '/'
@@ -78,19 +86,66 @@ exports.postLogin = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
 	console.log("Trace: Arrived at Signup Post Page");
 
-
 	var email = req.body.email;
 	var pass = req.body.pass;
 	var conpass = req.body.passconfirm;
 	//validation stuff
 	if (pass != conpass) {
 		//reject?
+		console.log("Password Mismatch at signup");
+		res.render('auth/getSignup', {
+			pageTitle: 'Matt Senior Project',
+			path: '/'
+		});
+	} else {
+		//first, lets check that we're unique
+		pool.connect((err, client, release) => {
+			if (err) {
+				return console.error('Error acquiring client', err.stack)
+			}
+			var query_str = "SELECT * from users where email='" + email + "' limit 1";
+			client.query(query_str, (err, resp) => {
+				console.log("Query: " + query_str);
+				release()
+				if (err) {
+					return console.error('Error executing query', err.stack)
+				}
+				if(resp.rowCount==1)
+				{
+					//then the emial already existed
+					console.log("Preexisting user at signup");
+					res.render('auth/getSignup', {
+						pageTitle: 'Matt Senior Project',
+						path: '/'
+					});
+				}
+				else
+				{
+					var insert_str = "Insert into users (email, password_hash, access) values ('" + email + "','"+pass+"', 0)"
+					pool.connect((err, client, release) => {
+						if (err) {
+							return console.error('Error acquiring client', err.stack)
+						}
+						client.query(insert_str, (err, resp) => {
+							console.log("Inserting: " + insert_str);
+							release()
+							if (err) {
+								return console.error('Error executing query', err.stack)
+							}
+							console.log("Database Return");
+							console.log(err);
+							console.log(resp);
+							console.log("Redirecting to Add Content");
+							res.redirect('/login');
+						})
+					})
+				}
+				
+			})
+		})
 	}
 
-	res.render('auth/getLogin', {
-		pageTitle: 'Matt Senior Project',
-		path: '/'
-	});
+
 };
 exports.getAdmin = (req, res, next) => {
 	console.log("Trace: Arrived at Admin Page");
@@ -138,7 +193,7 @@ exports.getViewContent = (req, res, next) => {
 		if (err) {
 			return console.error('Error acquiring client', err.stack)
 		}
-		var query_str="select c.content_id, title, image_url, count(r.content_id) as count, (select count(*) from reviews r2 where r2.content_id=c.content_id and r2.value=1) as like_count from content c full outer join reviews r on r.content_id=c.content_id group by r.content_id, c.content_id, title, image_url order by title asc";
+		var query_str = "select c.content_id, title, image_url, count(r.content_id) as count, (select count(*) from reviews r2 where r2.content_id=c.content_id and r2.value=1) as like_count from content c full outer join reviews r on r.content_id=c.content_id group by r.content_id, c.content_id, title, image_url order by title asc";
 		client.query(query_str, (err, resp) => {
 			release()
 			if (err) {

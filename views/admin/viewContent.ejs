@@ -4,17 +4,31 @@
 <body>
     <%- include('../includes/navigation.ejs') %>
     <table>
-<thead></thead>
+<thead>
+	<td>
+		Content
+	</td>
+	<td>
+		Number of Reviews
+	</td>
+
+	<td>
+		Like Ratio
+	</td>
+</thead>
 <tbody>
 
 	<% for (let i = 0; i<content.length;i++) {%>
 		<tr>
 			<td><a href="../content/<%-content[i].content_id%>"><%- content[i].title %></a></td>
-			<td>Thumbs Up</td>
-			<td>Neutral</td>
-			<td>Thumbs Down</td>
 			<td> <%- content[i].count %> </td>
-			<td> <%- content[i].like_count/content[i].count %> </td>
+			<td> 
+				<% if(content[i].count==0){ %>
+					<%- content[i].like_count+"/"+content[i].count %> 
+					<% } else {%>
+						<%- (content[i].like_count/content[i].count)*100 +"%" %> 
+						<% }%>
+			</td>
 		</tr>
 		<%  }%>
 	</tbody>
