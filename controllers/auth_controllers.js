@@ -110,18 +110,15 @@ exports.postSignup = (req, res, next) => {
 				if (err) {
 					return console.error('Error executing query', err.stack)
 				}
-				if(resp.rowCount==1)
-				{
+				if (resp.rowCount == 1) {
 					//then the emial already existed
 					console.log("Preexisting user at signup");
 					res.render('auth/getSignup', {
 						pageTitle: 'Matt Senior Project',
 						path: '/'
 					});
-				}
-				else
-				{
-					var insert_str = "Insert into users (email, password_hash, access) values ('" + email + "','"+pass+"', 0)"
+				} else {
+					var insert_str = "Insert into users (email, password_hash, access) values ('" + email + "','" + pass + "', 0)"
 					pool.connect((err, client, release) => {
 						if (err) {
 							return console.error('Error acquiring client', err.stack)
@@ -140,7 +137,7 @@ exports.postSignup = (req, res, next) => {
 						})
 					})
 				}
-				
+
 			})
 		})
 	}
@@ -209,3 +206,43 @@ exports.getViewContent = (req, res, next) => {
 	})
 
 };
+
+exports.getProfile = (req, res, next) => {
+	console.log("Trace: Arrived at View Profile");
+	const email =res.locals.email
+	//we need to get the information from the database
+	//then we server it to the view
+	//what do we need?
+	//Number of reviews would be good
+	//A list of positive reviews
+	//a list of negative reviews
+	//sorted by value, ignore value 2?
+	pool.connect((err, client, release) => {
+		if (err) {
+			return console.error('Error acquiring client', err.stack)
+		}
+		var query_str = "select * from reviews r join content c on c.content_id = r.content_id where r.user_id=(select u.user_id from users u where u.email='" + email + "') and r.value=1 order by c.title";
+		var query_str2 = "select * from reviews r join content c on c.content_id = r.content_id where r.user_id=(select u.user_id from users u where u.email='" + email + "') and r.value=3 order by c.title";
+		client.query(query_str, (err, resp) => {
+			//release()
+			if (err) {
+				return console.error('Error executing query', err.stack)
+			}
+			var liked_content = resp.rows;
+			client.query(query_str2, (err, resp) => {
+				release()
+				if (err) {
+					return console.error('Error executing query', err.stack)
+				}
+				var disliked_content = resp.rows;
+				res.render('auth/getProfile', {
+					pageTitle: 'Matt Senior Project',
+					path: '/',
+					liked_content: liked_content,
+					disliked_content: disliked_content
+				});
+			})
+		})
+	})
+
+}

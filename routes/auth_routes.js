@@ -10,6 +10,8 @@ router.get('/signup',  authController.getSignup);
 router.post('/login',  authController.postLogin);
 router.post('/signup',  authController.postSignup);
 
+router.get('/profile',authController.getProfile)
+
 router.get('/admin',authController.getAdmin)
 router.get('/admin/add-content',authController.getAddContent)
 router.post('/admin/add-content',authController.postAddContent)

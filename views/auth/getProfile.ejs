@@ -1,0 +1,21 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <h1><%- email%>'s profile </h1>
+	Liked content<ul>
+
+		<% for (let i = 0; i<liked_content.length;i++) {%>
+			<li><%- liked_content[i].title%></li>
+			<%  }%>
+		</ul>
+	Disiked content<ul>
+
+		<% for (let i = 0; i<disliked_content.length;i++) {%>
+			<li><%- disliked_content[i].title%></li>
+			<%  }%>
+		</ul>
+
+
+<%- include('../includes/end.ejs') %>
