@@ -16,6 +16,7 @@ router.get('/admin',authController.getAdmin)
 router.get('/admin/add-content',authController.getAddContent)
 router.post('/admin/add-content',authController.postAddContent)
 router.get('/admin/view-content',authController.getViewContent)
+router.get('/admin/view-users',authController.getViewUsers)
 
 
 module.exports = router;

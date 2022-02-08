@@ -19,13 +19,13 @@ exports.getSingleContent = (req, res, next) => {
 		if (err) {
 			return console.error('Error acquiring client', err.stack)
 		}
-		client.query("SELECT * from content where content_id='"+contentID+"'", (err, resp) => {
+		client.query("SELECT * from content where content_id='" + contentID + "'", (err, resp) => {
 			release()
 			if (err) {
-				res.render('content/contentError',
-				{ pageTitle: 'Matt Senior Project',
-				path: '/'
-			   });
+				res.render('content/contentError', {
+					pageTitle: 'Matt Senior Project',
+					path: '/'
+				});
 				return console.error('Error executing query', err.stack)
 			}
 			//console.log(resp.rows);
@@ -42,26 +42,28 @@ exports.getSingleContent = (req, res, next) => {
 };
 
 exports.getSearch = (req, res, next) => {
-	res.render('content/search',
-	{ pageTitle: 'Matt Senior Project',
-	path: '/'
-   });
+	console.log("Trace: Arrived at  Get Search  Page");
+	res.render('content/search', {
+		pageTitle: 'Matt Senior Project',
+		path: '/'
+	});
 }
 
 exports.postSearch = (req, res, next) => {
+	console.log("Trace: Arrived at Post Search");
 	var search = req.body.search;
-	console.log("Searching for: "+search);
+	console.log("Searching for: " + search);
 	pool.connect((err, client, release) => {
 		if (err) {
 			return console.error('Error acquiring client', err.stack)
 		}
-		client.query("SELECT * from content where lower(title) like lower('%"+search+"%')", (err, resp) => {
+		client.query("SELECT * from content where lower(title) like lower('%" + search + "%')", (err, resp) => {
 			release()
 			if (err) {
-				res.render('content/contentError',
-				{ pageTitle: 'Matt Senior Project',
-				path: '/'
-			   });
+				res.render('content/contentError', {
+					pageTitle: 'Matt Senior Project',
+					path: '/'
+				});
 				return console.error('Error executing query', err.stack)
 			}
 			//console.log(resp.rows);
@@ -69,6 +71,33 @@ exports.postSearch = (req, res, next) => {
 				pageTitle: 'Matt Senior Project',
 				path: '/',
 				content: resp.rows,
+				user: req.session.user
+			});
+		})
+	})
+}
+
+exports.getViewWaves = (req, res, next) => {
+	console.log("Trace: Arrived at View Waves");
+	console.log();
+	pool.connect((err, client, release) => {
+		if (err) {
+			return console.error('Error acquiring client', err.stack)
+		}
+		client.query("SELECT * from wavelengths", (err, resp) => {
+			release()
+			if (err) {
+				res.render('content/contentError', {
+					pageTitle: 'Matt Senior Project',
+					path: '/'
+				});
+				return console.error('Error executing query', err.stack)
+			}
+			//console.log(resp.rows);
+			res.render('admin/viewWaves', {
+				pageTitle: 'Matt Senior Project',
+				path: '/',
+				waves: resp.rows,
 				user: req.session.user
 			});
 		})

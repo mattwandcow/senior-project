@@ -1,0 +1,30 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <table>
+<thead>
+	<td>
+		Wave ID
+	</td>
+	<td>
+		User Count
+	</td>
+
+	<td>
+		Sync Threshhold (static?)
+	</td>
+</thead>
+<tbody>
+
+	<% for (let i = 0; i<waves.length;i++) {%>
+		<tr>
+			<td><%- waves[i].wavelength_id %></a></td>
+			<td> <%- waves[i].user_count %> </td>
+			<td> <%- waves[i].sync_threshhold %> </td>
+		</tr>
+		<%  }%>
+	</tbody>
+	</table>
+<%- include('../includes/end.ejs') %>

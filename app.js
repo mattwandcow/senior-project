@@ -44,6 +44,7 @@ app.use((req, res, next) => {
 	res.locals.isAuthenticated = req.session.isLoggedIn;
 	res.locals.isAdmin = req.session.isAdmin;
 	res.locals.email = req.session.user;
+	res.locals.user_id = req.session.user_id;
 	//res.locals.csrfToken = req.csrfToken();
 	next();
 });

@@ -59,6 +59,8 @@ exports.postLogin = (req, res, next) => {
 					else
 						req.session.isAdmin = false;
 					req.session.user = email;
+					req.session.user_id = resp.rows[0].user_id;
+
 
 					return req.session.save(err => {
 						console.log("Session Save Error:" + err);
@@ -209,7 +211,7 @@ exports.getViewContent = (req, res, next) => {
 
 exports.getProfile = (req, res, next) => {
 	console.log("Trace: Arrived at View Profile");
-	const email =res.locals.email
+	const email = res.locals.email
 	//we need to get the information from the database
 	//then we server it to the view
 	//what do we need?
@@ -242,6 +244,30 @@ exports.getProfile = (req, res, next) => {
 					disliked_content: disliked_content
 				});
 			})
+		})
+	})
+
+}
+exports.getViewUsers = (req, res, next) => {
+	console.log("Trace: Arrived at View Users");
+	pool.connect((err, client, release) => {
+		if (err) {
+			return console.error('Error acquiring client', err.stack)
+		}
+		var query_str = "select * from admin_view_users()";
+
+		client.query(query_str, (err, resp) => {
+			//release()
+			if (err) {
+				return console.error('Error executing query', err.stack)
+			}
+
+			res.render('admin/viewUsers', {
+				pageTitle: 'Matt Senior Project',
+				path: '/',
+				users: resp.rows
+			});
+
 		})
 	})
 

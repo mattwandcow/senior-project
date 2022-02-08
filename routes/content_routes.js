@@ -7,5 +7,6 @@ const contentController = require('../controllers/content_controllers');
 router.get('/content/:contentID',  contentController.getSingleContent);
 router.get('/search',  contentController.getSearch);
 router.post('/search',  contentController.postSearch);
+router.get('/waves',  contentController.getViewWaves);
 
 module.exports = router;
