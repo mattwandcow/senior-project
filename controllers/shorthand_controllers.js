@@ -11,8 +11,33 @@ var pool = new Pool({
 	}
 });
 
+exports.delayContent = (req, res, next) => {
+	console.log("Trace: Shorthand Delay Content Page");
+	const contentID = req.params.contentID;
+	pool.connect((err, client, release) => {
+		if (err) {
+			return console.error('Error acquiring client', err.stack)
+		}
+		var query_str="call set_content_delay(" + res.locals.user_id + ")," + contentID + ")"
+		client.query(query_str, (err, resp) => {
+			release()
+			if (err) {
+				res.render('content/contentError', {
+					pageTitle: 'Matt Senior Project',
+					path: '/'
+				});
+				return console.error('Error executing query', err.stack)
+			}
+			else
+			{
+				console.log("Delay set");
+			}
+		})
+	})
+	return;
+}
 exports.logReview = (req, res, next) => {
-	console.log("Trace: Arrived at Single Content Page");
+	console.log("Trace: Shorthand Log Review Page");
 	const contentID = req.params.contentID;
 	const userID = req.params.userID;
 	const direction = req.params.choice;

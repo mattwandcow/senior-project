@@ -1,0 +1,28 @@
+<section>
+	<% if(content){%>
+		<% for (let i = 0; i<content.length;i++) {%>
+			<% let card_source = content[i]%>
+			<%- include('../includes/content_card.ejs',{card_source: card_source}) %>
+		<% }} %>
+</section>
+<script>
+	function rate_button(user, contentID, marker) {
+		console.log(":"+contentID+":");
+		console.log(":"+user+":");
+		switch (marker) {
+			case 1:
+				fetch('/shorthand/rate/'+contentID+'/'+user+'/1')
+				break;
+			case 2:
+				fetch('/shorthand/rate/'+contentID+'/'+user+'/2')
+				break;
+			case 3:
+				fetch('/shorthand/rate/'+contentID+'/'+user+'/3')
+				break;
+			case 4:
+				fetch('/shorthand/delay/'+contentID+'/'+user)
+				break;
+		}
+		console.log('/shorthand/rate/'+contentID+'/'+user+'/');
+	}
+</script>
