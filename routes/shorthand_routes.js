@@ -4,7 +4,6 @@ const router = express.Router();
 
 const shorthandController = require('../controllers/shorthand_controllers');
 
-router.get('/shorthand/rate/:contentID/:userID/:choice',  shorthandController.logReview);
-router.get('/shorthand/delay/:contentID/:userID',  shorthandController.delayContent);
+router.get('/shorthand/rate/:contentID/:choice',  shorthandController.logReview);
 
 module.exports = router;

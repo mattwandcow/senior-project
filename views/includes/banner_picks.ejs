@@ -6,23 +6,11 @@
 		<% }} %>
 </section>
 <script>
-	function rate_button(user, contentID, marker) {
+	function rate_button(contentID, marker) {
 		console.log(":"+contentID+":");
-		console.log(":"+user+":");
-		switch (marker) {
-			case 1:
-				fetch('/shorthand/rate/'+contentID+'/'+user+'/1')
-				break;
-			case 2:
-				fetch('/shorthand/rate/'+contentID+'/'+user+'/2')
-				break;
-			case 3:
-				fetch('/shorthand/rate/'+contentID+'/'+user+'/3')
-				break;
-			case 4:
-				fetch('/shorthand/delay/'+contentID+'/'+user)
-				break;
-		}
-		console.log('/shorthand/rate/'+contentID+'/'+user+'/');
+		fetch('/shorthand/rate/'+contentID+'/'+marker)
+		var src='card_id_'+contentID
+		console.log(src);
+		document.getElementById(src).innerHTML="Rating Logged!"
 	}
 </script>
