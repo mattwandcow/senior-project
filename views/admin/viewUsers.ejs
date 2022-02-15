@@ -6,6 +6,9 @@
     <table>
 <thead>
 	<td>
+		User ID
+	</td>
+	<td>
 		Email
 	</td>
 	<td>
@@ -35,6 +38,7 @@
 
 	<% for (let i = 0; i<users.length;i++) {%>
 		<tr>
+			<td> <%- users[i].user_id %></a></td>
 			<td> <%- users[i].email %></a></td>
 			<td> <%- users[i].wavelength %> </td>
 			<td> <%- users[i].wave_sync %> </td>
