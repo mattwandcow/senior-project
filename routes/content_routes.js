@@ -8,5 +8,6 @@ router.get('/content/:contentID',  contentController.getSingleContent);
 router.get('/search',  contentController.getSearch);
 router.post('/search',  contentController.postSearch);
 router.get('/waves',  contentController.getViewWaves);
+router.get('/recommendations',  contentController.getRecommendations);
 
 module.exports = router;

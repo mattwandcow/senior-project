@@ -1,0 +1,26 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+	<%- include('../includes/navigation.ejs') %>
+	<% if(waves.length<=1){%>
+	<p>Something went wrong</p>
+	<% } else {%>
+	<p>Top pick is <%- waves[0].title%> from
+		<% if(waves[0].flag=='wave') {%>
+		your wavelength.
+		<% } else {%>
+		all users.
+		<% } %>
+	</p>
+	<% for (let i = 0; i<waves.length-1;i++){	%>
+	<p><a href='/content/<%- waves[i].content_id%>'><%- waves[i].title%></a> scored a <%- parseFloat(waves[i].percentage*100).toFixed(2) %>%
+		<% if(waves[i].flag=='wave') {%>
+		from your wavelength.
+		<% } else {%>
+		from all users.
+		<% } %>
+	</p>
+
+	<% }} %>
+	<%- include('../includes/end.ejs') %>

@@ -103,3 +103,39 @@ exports.getViewWaves = (req, res, next) => {
 		})
 	})
 }
+exports.getRecommendations = (req, res, next) => {
+	console.log("Trace: Arrived at View Recc");
+	var call_str="";
+	if(req.session.user_id)
+	{
+		console.log("--User "+req.session.user_id+" found");
+		call_str="select * from get_recommendations("+req.session.user_id+");";
+	}
+	else
+	{
+		console.log("--No user found");
+		call_str="select * from get_recommendations(-1);";
+	}
+	pool.connect((err, client, release) => {
+		if (err) {
+			return console.error('Error acquiring client', err.stack)
+		}
+		client.query(call_str, (err, resp) => {
+			release()
+			if (err) {
+				res.render('content/contentError', {
+					pageTitle: 'Matt Senior Project',
+					path: '/'
+				});
+				return console.error('Error executing query', err.stack)
+			}
+			//console.log(resp.rows);
+			res.render('content/recommendations', {
+				pageTitle: 'Matt Senior Project',
+				path: '/',
+				waves: resp.rows,
+				user: req.session.user
+			});
+		})
+	})
+}

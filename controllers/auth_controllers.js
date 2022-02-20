@@ -268,7 +268,7 @@ exports.getViewUsers = (req, res, next) => {
 				users: resp.rows
 			});
 
-		})
+		}) 
 	})
 
 }
