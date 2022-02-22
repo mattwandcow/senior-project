@@ -3,19 +3,31 @@
 
 <body>
 	<%- include('../includes/navigation.ejs') %>
-	<% if(waves.length<=1){%>
-	<p>Something went wrong</p>
+	<% if(wave_content.length==0 && zero_content.length==0){%>
+		<p>Something went wrong. Either there was an error with the database, or we don't have any recomendations for you. Sorry!</p>
 	<% } else {%>
-	<p>Top pick is <%- waves[0].title%> from
-		<% if(waves[0].flag=='wave') {%>
-		your wavelength.
-		<% } else {%>
-		all users.
+		<p>
+		<%if(wave_content.length>0){%>
+				The top pick from users on your wavelength is <a href='/content/<%- wave_content[0].content_id%>'><%- wave_content[0].title%></a>.
+				<% } else {%>
+				There is no viable recomendations from your wavelength.
 		<% } %>
+		<%if(zero_content.length>0){%>
+			The top pick from all users is <a href='/content/<%- zero_content[0].content_id%>'><%- zero_content[0].title%></a>, although we can't be sure how well that matches with your tastes.
+	<% } %>
 	</p>
-	<% for (let i = 0; i<waves.length-1;i++){	%>
-	<p><a href='/content/<%- waves[i].content_id%>'><%- waves[i].title%></a> scored a <%- parseFloat(waves[i].percentage*100).toFixed(2) %>%
-		<% if(waves[i].flag=='wave') {%>
+	<%if(wave_content.length>0){%>
+	<h2>Top <%- wave_content.length %> Reviews from your wavelength</h2>
+	<% for (let i = 0; i<wave_content.length;i++){	%>
+	<p><a href='/content/<%- wave_content[i].content_id%>'><%- wave_content[i].title%></a> scored a <%- parseFloat(wave_content[i].percentage*100).toFixed(2) %>% like ratio 
+		from your wavelength.
+	</p>
+
+	<% }} %>
+	<h2>Top <%- zero_content.length %> Reviews from your wavelength</h2>
+	<% for (let i = 0; i<zero_content.length;i++){	%>
+	<p><a href='/content/<%- zero_content[i].content_id%>'><%- zero_content[i].title%></a> scored a <%- parseFloat(zero_content[i].percentage*100).toFixed(2) %>% like ratio 
+		<% if(zero_content[i].flag=='wave') {%>
 		from your wavelength.
 		<% } else {%>
 		from all users.

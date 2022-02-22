@@ -24,9 +24,9 @@
 			<td> <%- content[i].count %> </td>
 			<td> 
 				<% if(content[i].count==0){ %>
-					<%- content[i].like_count+"/"+content[i].count %> 
+					<%- "No reviews yet" %> 
 					<% } else {%>
-						<%- (content[i].like_count/content[i].count)*100 +"%" %> 
+						<%- parseFloat((content[i].like_count/content[i].count)*100).toFixed(2) +"%" %> 
 						<% }%>
 			</td>
 		</tr>

@@ -23,12 +23,15 @@
 
 <body>
 	<%- include('../includes/navigation.ejs') %>
-	<h1>Welcome to the project</h1>
-	Title: <%- content.title %>
+	<h2><%- content.title %></h2>
 	Blah blah blah details
 	<button onClick="rate_button( '<%- user %>','<%- content.content_id %>',1)">Up</button>
 	<button onClick="rate_button( '<%- user %>','<%- content.content_id %>',2)">Neutral</button>
 	<button onClick="rate_button( '<%- user %>','<%- content.content_id %>',3)">Down</button>
 	
-	Should show whichever the user has set
+	(Should show whichever the user has set)
+	<% if (isAdmin) { %>
+	 
+		<p><a href="../editcontent/<%-content.content_id%>">Edit this</a></p>
+	<% } %>
 	<%- include('../includes/end.ejs') %>

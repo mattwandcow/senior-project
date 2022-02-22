@@ -1,0 +1,18 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+	<%- include('../includes/navigation.ejs') %>
+	<% if(zero_content.length<=1){%>
+	<p>Something went wrong</p>
+	<% } else {%>
+	<p>Since you aren't logged in, we can't tailor the recommendations to you, and instead, 
+		we'll have to draw from the reviews of all users. The top pick is <%- zero_content[0].title%>.
+	</p>
+	<h2>Top 5 Reviews</h2>
+	<% for (let i = 0; i<zero_content.length;i++){	%>
+	<p><a href='/content/<%- zero_content[i].content_id%>'><%- zero_content[i].title%></a> with <%- parseFloat(zero_content[i].percentage*100).toFixed(2) %>% like ratio.
+	</p>
+
+	<% }} %>
+	<%- include('../includes/end.ejs') %>
