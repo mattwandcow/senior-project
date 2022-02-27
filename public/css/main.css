@@ -57,7 +57,9 @@ main {
 	cursor: pointer;
 }
 
-
+img{
+	max-width: 200px;
+}
 .main-header__item a {
 	text-decoration: none;
 	color: #FBFEF9;
