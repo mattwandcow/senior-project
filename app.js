@@ -8,6 +8,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 const PORT = process.env.PORT || 5000; //Run on Port variable, or 5000
 
+//file upload library
+const multer = require('multer');
+
 //what do these do again
 const bodyParser = require('body-parser');
 
@@ -74,6 +77,35 @@ const Options = {
 
 //app.use(csrfProtection); // We now add our Cross-Site Request Forgery (csrf) protection. Must be enabled after the session is set
 
+//filestorage and image setup
+const fileStorage = multer.diskStorage({
+	destination: (req, file, cb) => {
+	  cb(null, './public/images'); // this is our path to the 'images' folder
+	},
+	filename: (req, file, cb) => {
+		console.log("Modifying file name...");
+	  // NOTE!! ON THE FOLLOWING LINE 'new Date().toISOString()' will put a colon (:) in the filename which Windows does not allow. That is why we add 'replace(/:/g,'_')' which replaces all colons (:) with an underscore.
+	  cb(null, new Date().toISOString().replace(/:/g,'_') + '-' + file.originalname); // we have it name the file with the current date as a string and concatenate (+) that to the original filename. The date gives it uniqueness in the case of duplicate files.
+	}
+  });
+  
+  // the 'fileFilter' filters what types of files we will accept.
+  const fileFilter = (req, file, cb) => {
+	if (
+	  file.mimetype === 'image/png' ||
+	  file.mimetype === 'image/jpg' ||
+	  file.mimetype === 'image/jpeg' ||
+	  file.mimetype === 'image/gif'
+	  ) {
+	  cb(null, true); // true to store the file types in the 'if' part of the block
+	} else {
+	  cb(null, false); // false if we don't want to store the file which is the else block
+	}  
+  };
+//Let's use the file store stuff
+app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')); 
+
+
 
 const errorController = require('./controllers/errors');
 const adminRoutes = require('./routes/admin_routes')
@@ -96,12 +128,15 @@ app.use('/db', async (req, res) => {
 		res.send("Error " + err);
 	}
 })
-app.use('/admin', adminRoutes);
+app.use(adminRoutes);
 app.use(authRoutes);
 app.use(baseRoutes);
 app.use(contentRoutes);
 app.use(shorthandRoutes);
 app.use(errorController.get404);
 app.use(errorController.get500);
+
+
+
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));

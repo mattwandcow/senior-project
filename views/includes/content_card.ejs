@@ -1,5 +1,5 @@
 <div class="content_card">
-	<span><%- card_source.title %></span>
+	<span><a href="/content/<%- card_source.content_id%>"><%- card_source.title %></a></span>
 	<div class="button_box" id="card_id_<%- card_source.content_id%>">
 		<button onClick="rate_button('<%- card_source.content_id %>',1)">Up</button>
 		<button onClick="rate_button('<%- card_source.content_id %>',4)">Delay</button>

@@ -1,4 +1,5 @@
 <header>
+	<a href="/">WaveReview</a>
 	<nav>
 		<% if(isAdmin) {%>
 		<a href='/admin'>Admin Page</a>
@@ -10,7 +11,7 @@
 		<a href='/profile'>Profile</a>
 		<a href='/about'>About this project</a>
 		<% if(isAuthenticated) { %>
-		<a href='/logout'>Logout</a>
+		Welcome, <%- email %>. (<a href='/logout'>Logout</a>)
 		<% } else { %>
 		<a href='/login'>Login</a>
 		<% } %>

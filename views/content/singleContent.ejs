@@ -24,7 +24,7 @@
 <body>
 	<%- include('../includes/navigation.ejs') %>
 	<h2><%- content.title %></h2>
-	Blah blah blah details
+	<img src="/images/<%-content.image_url%>">
 	<button onClick="rate_button( '<%- user %>','<%- content.content_id %>',1)">Up</button>
 	<button onClick="rate_button( '<%- user %>','<%- content.content_id %>',2)">Neutral</button>
 	<button onClick="rate_button( '<%- user %>','<%- content.content_id %>',3)">Down</button>
@@ -33,5 +33,6 @@
 	<% if (isAdmin) { %>
 	 
 		<p><a href="../editcontent/<%-content.content_id%>">Edit this</a></p>
+		<p><a href="../add-image/<%-content.content_id%>">Add/Change Image</a></p>
 	<% } %>
 	<%- include('../includes/end.ejs') %>

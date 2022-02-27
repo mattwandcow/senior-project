@@ -17,8 +17,17 @@
 	<p>No results found</p>
 	<%}else{%>
 		<% for (let i = 0; i<content.length;i++) {%>
-			<li><%- content[i].title%></li>
+			<%- include('../includes/content_card.ejs',{card_source: content[i]}) %>
 			<%  }%>
 		</ul>
 	<%}%>
+	<script>
+		function rate_button(contentID, marker) {
+			console.log(":"+contentID+":");
+			fetch('/shorthand/rate/'+contentID+'/'+marker)
+			var src='card_id_'+contentID
+			console.log(src);
+			document.getElementById(src).innerHTML="Rating Logged!"
+		}
+	</script>
 <%- include('../includes/end.ejs') %>

@@ -1,0 +1,15 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <h1>Adding an image to <%- content.title%></h1>
+	
+	Maybe an image here if there was one before?
+
+	<form action="/add-image/<%- content.content_id%>" method="POST" enctype="multipart/form-data">
+		<input type="file" name="image" id="image">
+		<button type="submit">Update File</button>
+	</form>
+
+<%- include('../includes/end.ejs') %>
