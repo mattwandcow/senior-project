@@ -2,20 +2,20 @@
 
 <script>
 	function rate_button(user, contentID, marker) {
-		console.log(":"+contentID+":");
-		console.log(":"+user+":");
+		console.log(":" + contentID + ":");
+		console.log(":" + user + ":");
 		switch (marker) {
 			case 1:
-				fetch('/shorthand/rate/'+contentID+'/'+user+'/1')
+				fetch('/shorthand/rate/' + contentID + '/' + user + '/1')
 				break;
 			case 2:
-				fetch('/shorthand/rate/'+contentID+'/'+user+'/2')
+				fetch('/shorthand/rate/' + contentID + '/' + user + '/2')
 				break;
 			case 3:
-				fetch('/shorthand/rate/'+contentID+'/'+user+'/3')
+				fetch('/shorthand/rate/' + contentID + '/' + user + '/3')
 				break;
 		}
-		console.log('/shorthand/rate/'+contentID+'/'+user+'/');
+		console.log('/shorthand/rate/' + contentID + '/' + user + '/');
 	}
 </script>
 
@@ -24,15 +24,41 @@
 <body>
 	<%- include('../includes/navigation.ejs') %>
 	<h2><%- content.title %></h2>
+	<% if(content.image_url) {%>
+
 	<img src="/images/<%-content.image_url%>">
-	<button onClick="rate_button( '<%- user %>','<%- content.content_id %>',1)">Up</button>
-	<button onClick="rate_button( '<%- user %>','<%- content.content_id %>',2)">Neutral</button>
-	<button onClick="rate_button( '<%- user %>','<%- content.content_id %>',3)">Down</button>
-	
-	(Should show whichever the user has set)
-	<% if (isAdmin) { %>
-	 
+	<% } %>
+	<% if(user_id){ %>
+	<button
+		class="rating <% if(content.rating==1) {%>pressed<%}%>" onClick="rate_button( '<%- user %>','<%- content.content_id %>',1)">Up</button>
+	<button
+		class="rating <% if(content.rating==2) {%>pressed<%}%>" onClick="rate_button( '<%- user %>','<%- content.content_id %>',2)">Neutral</button>
+	<button
+		class="rating <% if(content.rating==3) {%>pressed<%}%>" onClick="rate_button( '<%- user %>','<%- content.content_id %>',3)">Down</button>
+	<% } %>
+	<% if(content.details) {%>
+	<p><%-content.details %></p>
+	<% } %>
+	<% if(content.rating) { //that means the user has already judged this%>
+		<% if(content.rating==1) {%>
+			<p>You marked this content as something you enjoyed!</p>
+			<% } else if (content.rating==3)  {%>
+			<p>You marked this content as something you didn't enjoy.</p>
+		<% } %>
+	<% }%>
+	<% if(content.wz_rating) { //means that there is a rating in the system%>
+
+	<p>Our users have given <%- content.title %> a general rating of <%- (content.wz_rating*100).toFixed(2) %>.
+		<% if(content.wl_rating) { //means that there is a rating in the system%>
+		<p>Your wavelength has given it a more focused rating of <%- (content.wl_rating*100).toFixed(2) %>.
+			<% } %>
+		</p>
+		<% } else { //no rating%>
+		<p>This content has not yet been reviewed by our users.</p>
+		<% } %>
+		<% if (isAdmin) { %>
+
 		<p><a href="../editcontent/<%-content.content_id%>">Edit this</a></p>
 		<p><a href="../add-image/<%-content.content_id%>">Add/Change Image</a></p>
-	<% } %>
-	<%- include('../includes/end.ejs') %>
+		<% } %>
+		<%- include('../includes/end.ejs') %>

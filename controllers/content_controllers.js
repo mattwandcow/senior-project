@@ -11,42 +11,55 @@ var pool = new Pool({
 	}
 });
 
+
+
 exports.getSingleContent = (req, res, next) => {
 	console.log("Trace: Arrived at Single Content Page");
 	const contentID = req.params.contentID;
 	console.log(contentID);
-	pool.connect((err, client, release) => {
+	var user = req.session.user_id;
+	if (!req.session.user_id) {
+		user=0;
+	}
+	var query = {
+		text: 'select * from get_single_content($1,$2)',
+		values: [contentID, user]
+	}
+
+console.log(query);
+pool.connect((err, client, release) => {
+	if (err) {
+		return console.error('Error acquiring client', err.stack)
+	}
+
+	client.query(query, (err, resp) => {
+		release()
 		if (err) {
-			return console.error('Error acquiring client', err.stack)
-		}
-		client.query("SELECT * from content where content_id='" + contentID + "'", (err, resp) => {
-			release()
-			if (err) {
-				res.render('content/contentError', {
-					pageTitle: 'Matt Senior Project',
-					path: '/'
-				});
-				return console.error('Error executing query', err.stack)
-			}
-			//console.log(resp.rows);
-			res.render('content/singleContent', {
+			res.render('content/contentError', {
 				pageTitle: 'Matt Senior Project',
-				path: '/',
-				content: resp.rows[0],
-				user: req.session.user
+				path: '/'
 			});
-		})
+			return console.error('Error executing query', err.stack)
+		}
+		console.log(resp.rows);
+
+		res.render('content/singleContent', {
+			pageTitle: 'Matt Senior Project',
+			path: '/',
+			content: resp.rows[0],
+			user: req.session.user
+		});
 	})
+})
 
 
 };
 
 exports.getEditContent = (req, res, next) => {
 	//check for logged in and have auth
-	var cid=req.params.contentID;
-	console.log("Trace: Arrived at  Get Edit Content Page with a CID of "+cid);
-	if(!req.session.isAdmin)
-	{
+	var cid = req.params.contentID;
+	console.log("Trace: Arrived at  Get Edit Content Page with a CID of " + cid);
+	if (!req.session.isAdmin) {
 		console.log("Attempted Access of Restricted Page. Rerouting");
 		res.render('auth/getLogin', {
 			pageTitle: 'Matt Senior Project',
@@ -79,9 +92,8 @@ exports.getEditContent = (req, res, next) => {
 }
 exports.postEditContent = (req, res, next) => {
 	console.log("Trace: Arrived at  Post Edit Content Page");
-//check for logged in and have auth
-if(!req.session.isAdmin)
-	{
+	//check for logged in and have auth
+	if (!req.session.isAdmin) {
 		console.log("Attempted Access of Restricted Page. Rerouting");
 		res.render('auth/getLogin', {
 			pageTitle: 'Matt Senior Project',
@@ -89,12 +101,38 @@ if(!req.session.isAdmin)
 		});
 		return;
 	}
-var cid=req.params.contentID;
-console.log("Content ID: "+cid);
-var title = req.body.title;
-var details = req.body.details;
-console.log(title);
-console.log(details);
+	var cid = req.params.contentID;
+	var title = req.body.title;
+	var details = req.body.details;
+
+	pool.connect((err, client, release) => {
+		if (err) {
+			return console.error('Error acquiring client', err.stack)
+		}
+		var query = {
+			text: 'call edit_content($1,$2,$3,$4)',
+			values: [cid, req.session.user_id, title, details]
+		}
+
+		client.query(query, (err, resp) => {
+			release()
+			if (err) {
+				res.render('content/contentError', {
+					pageTitle: 'Matt Senior Project',
+					path: '/'
+				});
+				return console.error('Error executing query', err.stack)
+			}
+			console.log(resp.rows[0]);
+			res.render('content/editContent', {
+				pageTitle: 'Matt Senior Project',
+				path: '/',
+				content: resp.rows[0],
+				user: req.session.user
+			});
+		})
+	})
+	res.redirect('/content/' + cid)
 }
 
 exports.getSearch = (req, res, next) => {
@@ -161,18 +199,15 @@ exports.getViewWaves = (req, res, next) => {
 }
 exports.getRecommendations = (req, res, next) => {
 	console.log("Trace: Arrived at View Recc");
-	var call_str="";
-	var page_target='content/recommendations';
-	if(req.session.user_id)
-	{
-		console.log("--User "+req.session.user_id+" found");
-		call_str="select * from get_recommendations("+req.session.user_id+");";
-	}
-	else
-	{
+	var call_str = "";
+	var page_target = 'content/recommendations';
+	if (req.session.user_id) {
+		console.log("--User " + req.session.user_id + " found");
+		call_str = "select * from get_recommendations(" + req.session.user_id + ");";
+	} else {
 		console.log("--No user found");
-		call_str="select * from get_recommendations(-1);";
-		page_target='content/unloggedRecc';
+		call_str = "select * from get_recommendations(-1);";
+		page_target = 'content/unloggedRecc';
 	}
 	pool.connect((err, client, release) => {
 		if (err) {
@@ -188,8 +223,12 @@ exports.getRecommendations = (req, res, next) => {
 				return console.error('Error executing query', err.stack)
 			}
 			//console.log(resp.rows);
-			var wave_arr=resp.rows.filter(record=>{return record.flag=='wave'});
-			var zero_arr=resp.rows.filter(record=>{return record.flag=="zero"});
+			var wave_arr = resp.rows.filter(record => {
+				return record.flag == 'wave'
+			});
+			var zero_arr = resp.rows.filter(record => {
+				return record.flag == "zero"
+			});
 			//console.log(resp.rows);
 			console.log(wave_arr);
 			console.log(zero_arr);

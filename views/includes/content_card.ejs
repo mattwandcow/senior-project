@@ -1,8 +1,10 @@
 <div class="content_card">
 	<span><a href="/content/<%- card_source.content_id%>"><%- card_source.title %></a></span>
+	<% if(user_id){ %>
 	<div class="button_box" id="card_id_<%- card_source.content_id%>">
 		<button onClick="rate_button('<%- card_source.content_id %>',1)">Up</button>
 		<button onClick="rate_button('<%- card_source.content_id %>',4)">Delay</button>
 		<button onClick="rate_button('<%- card_source.content_id %>',3)">Down</button>
 	</div>
+	<% } %>
 </div>

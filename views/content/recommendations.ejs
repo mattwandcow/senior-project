@@ -24,7 +24,7 @@
 	</p>
 
 	<% }} %>
-	<h2>Top <%- zero_content.length %> Reviews from your wavelength</h2>
+	<h2>Top <%- zero_content.length %> Reviews from All Users</h2>
 	<% for (let i = 0; i<zero_content.length;i++){	%>
 	<p><a href='/content/<%- zero_content[i].content_id%>'><%- zero_content[i].title%></a> scored a <%- parseFloat(zero_content[i].percentage*100).toFixed(2) %>% like ratio 
 		<% if(zero_content[i].flag=='wave') {%>
