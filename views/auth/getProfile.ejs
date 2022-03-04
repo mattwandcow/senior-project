@@ -7,13 +7,13 @@
 	Liked content<ul>
 
 		<% for (let i = 0; i<liked_content.length;i++) {%>
-			<li><%- liked_content[i].title%></li>
+			<li><a href="/content/<%- liked_content[i].content_id%>"><%- liked_content[i].title%></a></li>
 			<%  }%>
 		</ul>
 	Disiked content<ul>
 
 		<% for (let i = 0; i<disliked_content.length;i++) {%>
-			<li><%- disliked_content[i].title%></li>
+			<li><a href="/content/<%- disliked_content[i].content_id%>"><%- disliked_content[i].title%></a></li>
 			<%  }%>
 		</ul>
 

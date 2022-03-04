@@ -9,24 +9,31 @@
 		enjoyed their banter, and they were a pleasent part of my morning, until a comment was made by one about this
 		movie. It was something along the lines of "Isn't this Mars? How is he breathing? That's not realistic at all!"
 		I felt my respect errode away, as his main reason for disliking the movie seemed to be based on the fact that he
-		couldn't identify a movie with a guy juming fifty feet into the air as a action fantasy, and not a serious
+		couldn't identify a movie with a guy jumping fifty feet into the air as a action/fantasy, and not a serious
 		scientific treatment of the location. </p>
-	<p>And after that, I couldn't trust his opinions on movies. Our tastes were just too dissimilar. I'd see it a bit
+	<p>And after that, I couldn't trust his opinions on movies. Our tastes were just too dissimilar. I'd seen it a bit
 		before, with newspaper reviews of theatrical releases not really matching what I would think of a movie. They
-		were occasionaly worth a gander, as they knew things like actors and directors, but thier ideas of merit were
-		not mine, and there for, less.</p>
-
+		were occasionaly worth a gander, as they knew things like actors and directors (useful as this was pre IMDB),
+		but thier ideas of merit were not mine, and therefore, less important.</p>
 	<p>And that's the problem with the big review sites. It does't matter how intelligent or erudite that their critics
 		are, those critics aren't you. They don't know you, and there is no relation between what they like and you
 		like, unless the stars align.</p>
-	<p>What this project is endeavoring to do is base user recomendations based on reviews of people with a similar
-		review 'wavelength' to you. Wavelength are what I call the intersecting interests of a group. Think of them like
-		a phantom people, with average tastes. Well, tastes averaged from the people sharing the tastes that comprise
-		their makeup. Which changes on occasion. One of the factors we track is your deviation from your wavelength. We
-		want you to have people on your wavelength, but the efficacy is reduced if they don't share your tastes. So as
-		reviews come in, we recalculate your relation to the wavelength, and if it crosses a threshhold, we'll move you
-		to a new wavelength that more suits your tastes.</p>
-		<h2>How this site was built</h2>
-		<p>This site was built using Node.js, Express and _____</p>
+	<p>What this project is endeavoring to do is calculate recomendations based on reviews of people with a similar
+		review 'wavelength' to you. Wavelength are what I call the intersecting interests of a group. Your wavelength
+		changes as you review more content. The more reviews you have, the more accurately we can compare your tastes
+		to others.</p>
+	<p>While working on this project, I realized that movies are not the only content that can be used to determine what
+		a persons likes and dislikes are. Everything makes up the mosiac of you, from bands, to movies and games, to books.
+	</p>
+	<h2>How to use this site</h2>
+		<p>Any visitor to the site can click on "<a href="/recommendations">Recommendations</a>" and get a list of
+		content items that have a high like ratio from the general reviews of all members of the site. Creating a
+		user account and logging in enables you to rate content items, which places you in a wavelength. Recommendations
+		then may review more targeted results, provided there are enough people on your wavelength to provide useful
+		recomendations.
+		Search can be useful in finding a specific content item, and clicking on the title of a content item brings you to
+		a page with more information on that individual content piece. If you are logged in, the option to see your profile
+		will show what you've rated so far. 
+	</p>
 
 	<%- include('../includes/end.ejs') %>

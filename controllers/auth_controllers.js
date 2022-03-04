@@ -212,13 +212,11 @@ exports.getViewContent = (req, res, next) => {
 exports.getProfile = (req, res, next) => {
 	console.log("Trace: Arrived at View Profile");
 	const email = res.locals.email
-	//we need to get the information from the database
-	//then we server it to the view
-	//what do we need?
-	//Number of reviews would be good
-	//A list of positive reviews
-	//a list of negative reviews
-	//sorted by value, ignore value 2?
+	if (!email)
+	{
+		res.redirect('/login');
+		return;
+	}
 	pool.connect((err, client, release) => {
 		if (err) {
 			return console.error('Error acquiring client', err.stack)
