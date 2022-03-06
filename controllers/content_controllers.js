@@ -123,13 +123,6 @@ exports.postEditContent = (req, res, next) => {
 				});
 				return console.error('Error executing query', err.stack)
 			}
-			console.log(resp.rows[0]);
-			res.render('content/editContent', {
-				pageTitle: 'Matt Senior Project',
-				path: '/',
-				content: resp.rows[0],
-				user: req.session.user
-			});
 		})
 	})
 	res.redirect('/content/' + cid)

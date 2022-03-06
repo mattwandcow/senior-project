@@ -164,13 +164,15 @@ exports.getAddContent = (req, res, next) => {
 };
 exports.postAddContent = (req, res, next) => {
 	console.log("Trace: Arrived at Post Add Content");
-	var insert_str = "Insert into content (title, created_by, updated_by) values ('" + req.body.title + "', (select user_id from users where email='" + req.session.user + "'), (select user_id from users where email='" + req.session.user + "'))"
+	var query = {
+		text: 'call create_content($1,$2)',
+		values: [req.session.user_id, req.body.title]
+	}
 	pool.connect((err, client, release) => {
 		if (err) {
 			return console.error('Error acquiring client', err.stack)
 		}
-		client.query(insert_str, (err, resp) => {
-			console.log("Inserting: " + insert_str);
+		client.query(query, (err, resp) => {
 			release()
 			if (err) {
 				return console.error('Error executing query', err.stack)
