@@ -23,19 +23,13 @@
 
 <body>
 	<%- include('../includes/navigation.ejs') %>
+	<content>
 	<h2><%- content.title %></h2>
 	<% if(content.image_url) {%>
 
-	<img src="/images/<%-content.image_url%>">
+	<img class="single_content_image" src="/images/<%-content.image_url%>">
 	<% } %>
-	<% if(user_id){ %>
-	<button
-		class="rating <% if(content.rating==1) {%>pressed<%}%>" onClick="rate_button( '<%- user %>','<%- content.content_id %>',1)">Up</button>
-	<button
-		class="rating <% if(content.rating==2) {%>pressed<%}%>" onClick="rate_button( '<%- user %>','<%- content.content_id %>',2)">Neutral</button>
-	<button
-		class="rating <% if(content.rating==3) {%>pressed<%}%>" onClick="rate_button( '<%- user %>','<%- content.content_id %>',3)">Down</button>
-	<% } %>
+
 	<% if(content.details) {%>
 	<p><%-content.details %></p>
 	<% } %>
@@ -46,6 +40,16 @@
 			<p>You marked this content as something you didn't enjoy.</p>
 		<% } %>
 	<% }%>
+	<% if(user_id){ %>
+		<div class="content_card">
+		<button
+			class="rating <% if(content.rating==1) {%>pressed<%}%>" onClick="rate_button( '<%- user %>','<%- content.content_id %>',1)">Up</button>
+		<button
+			class="rating <% if(content.rating==2) {%>pressed<%}%>" onClick="rate_button( '<%- user %>','<%- content.content_id %>',2)">Neutral</button>
+		<button
+			class="rating <% if(content.rating==3) {%>pressed<%}%>" onClick="rate_button( '<%- user %>','<%- content.content_id %>',3)">Down</button>
+			</div>
+		<% } %>
 	<% if(content.wz_rating) { //means that there is a rating in the system%>
 
 	<p>Our users have given <%- content.title %> a general rating of <%- (content.wz_rating*100).toFixed(2) %>.
@@ -61,4 +65,11 @@
 		<p><a href="../editcontent/<%-content.content_id%>">Edit this</a></p>
 		<p><a href="../add-image/<%-content.content_id%>">Add/Change Image</a></p>
 		<% } %>
-		<%- include('../includes/end.ejs') %>
+
+		</content>
+		<footer style="position: relative;">
+			<p>This site was built in 2022 for Matt Wilson's Senior project. 
+				It was built using Node.js, Express and PostgresSql. 
+				It is hosted on Heroku and <a href="https://github.com/mattwandcow/senior-project">Github</a></p>
+		</footer>
+		</body>

@@ -27,7 +27,7 @@
 	</td>
 	</td>
 	<td>
-		Zero SYnc
+		Zero Sync
 	</td>
 	</td>
 	<td>
@@ -35,16 +35,16 @@
 	</td>
 </thead>
 <tbody>
-
+	
 	<% for (let i = 0; i<users.length;i++) {%>
 		<tr>
 			<td> <%- users[i].user_id %></a></td>
 			<td> <%- users[i].email %></a></td>
 			<td> <%- users[i].wavelength %> </td>
-			<td> <%- users[i].wave_sync %> </td>
+			<td> <%- parseFloat(users[i].wave_sync*100).toFixed(2) %> </td>
 			<td> <%- users[i].review_count %> </td>
-			<td> <%- users[i].review_average %> </td>
-			<td> <%- users[i].zero_sync %> </td>
+			<td> <%- parseFloat(users[i].review_average*100).toFixed(2) %> </td>
+			<td> <%- parseFloat(users[i].zero_sync*100).toFixed(2) %> </td>
 			<td> <%- users[i].last_login %> </td>
 		</tr>
 		<%  }%>

@@ -1,3 +1,10 @@
+<% if(isAuthenticated) { %>
+	<div id="topbar">
+
+		<span>Welcome, <%- email %>. (<a href='/logout'>Logout</a>)</span>
+	</div>
+	<% } %>
+
 <header>
 	<a href="/"><img id="banner_image" src="../images/banner.png" alt="Wavelength Recemnendations"></a>
 	<nav>
@@ -6,11 +13,9 @@
 		<% } %>
 		<a href='/recommendations'>Recommendations</a>
 		<a href='/search'>Search</a>
-		Review some movies
 		<a href='/about'>About</a>
 		<% if(isAuthenticated) { %>
 			<a href='/profile'>Profile</a>
-		Welcome, <%- email %>. (<a href='/logout'>Logout</a>)
 		<% } else { %>
 		<a href='/login'>Login</a>
 		<% } %>

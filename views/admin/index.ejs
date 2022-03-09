@@ -3,12 +3,16 @@
 
 <body>
     <%- include('../includes/navigation.ejs') %>
-    <h1>Welcome to the project</h1>
-admin Page	
-view User pages
-view wavelengths
-view recomendations?
-<a href='/admin/add-content'>Add content</a>
-<a href='/admin/view-content'>View content</a>
-<a href='/admin/view-users'>View user list</a>
+	<content>
+
+		<h1>Admin Page</h1>
+		<ul class="vert-menu">
+			<li><a href='/admin/add-content'>Add content</a></li>
+			<li><a href='/admin/view-content'>View content</a></li>
+			<li><a href='/admin/view-users'>View user list</a></li>
+			<li>-view User pages</li>
+			<li>-view wavelengths</li>
+			<li>-view recomendations?</li>
+		</ul>
+	</content>
 <%- include('../includes/end.ejs') %>
