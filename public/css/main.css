@@ -138,6 +138,16 @@ footer {
 	background-color: cadetblue;
 	margin-top: auto;
 }
+#footer-rel {
+	min-height: 50px;
+	bottom: 0;
+	left: 0;
+	flex-basis: 100%;
+	width: 100%;
+	text-align: center;
+	background-color: cadetblue;
+	margin-top: auto;
+}
 
 thead {
 	font-size: 1.2em;
