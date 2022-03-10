@@ -1,22 +1,28 @@
 <% if(isAuthenticated) { %>
-	<div id="topbar">
+<div id="topbar">
 
-		<span>Welcome, <%- email %>. (<a href='/logout'>Logout</a>)</span>
-	</div>
-	<% } %>
+	<span>Welcome, <%- email %>. (<a href='/logout'>Logout</a>)</span>
+</div>
+<% } %>
 
 <header>
 	<a href="/"><img id="banner_image" src="../images/banner.png" alt="Wavelength Recemnendations"></a>
 	<nav>
+		<a href='/'>Home</a>
 		<% if(isAdmin) {%>
 		<a href='/admin'>Admin Page</a>
 		<% } %>
 		<a href='/recommendations'>Recommendations</a>
+		<% if(isAuthenticated) { %>
+		<a href='/rate'>Rate</a>
+		<% } %>
 		<a href='/search'>Search</a>
 		<a href='/about'>About</a>
 		<% if(isAuthenticated) { %>
-			<a href='/profile'>Profile</a>
+		<a href='/profile'>Profile</a>
+		<a href='/logout'>Logout</a>
 		<% } else { %>
+		<a href='/signup'>Signup</a>
 		<a href='/login'>Login</a>
 		<% } %>
 	</nav>

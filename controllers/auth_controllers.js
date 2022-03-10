@@ -100,45 +100,21 @@ exports.postSignup = (req, res, next) => {
 			path: '/'
 		});
 	} else {
+		var query = {
+			text: 'call create_user($1,$2)',
+			values: [email,pass]
+		}
 		//first, lets check that we're unique
 		pool.connect((err, client, release) => {
 			if (err) {
 				return console.error('Error acquiring client', err.stack)
 			}
-			var query_str = "SELECT * from users where email='" + email + "' limit 1";
-			client.query(query_str, (err, resp) => {
-				console.log("Query: " + query_str);
+			client.query(query, (err, resp) => {
 				release()
 				if (err) {
 					return console.error('Error executing query', err.stack)
 				}
-				if (resp.rowCount == 1) {
-					//then the emial already existed
-					console.log("Preexisting user at signup");
-					res.render('auth/getSignup', {
-						pageTitle: 'Matt Senior Project',
-						path: '/'
-					});
-				} else {
-					var insert_str = "Insert into users (email, password_hash, access) values ('" + email + "','" + pass + "', 0)"
-					pool.connect((err, client, release) => {
-						if (err) {
-							return console.error('Error acquiring client', err.stack)
-						}
-						client.query(insert_str, (err, resp) => {
-							console.log("Inserting: " + insert_str);
-							release()
-							if (err) {
-								return console.error('Error executing query', err.stack)
-							}
-							console.log("Database Return");
-							console.log(err);
-							console.log(resp);
-							console.log("Redirecting to Add Content");
 							res.redirect('/login');
-						})
-					})
-				}
 
 			})
 		})

@@ -2,20 +2,23 @@
 </head>
 
 <body>
-    <%- include('../includes/navigation.ejs') %>
-    <h1><%- email%>'s profile </h1>
-	Liked content<ul>
+	<%- include('../includes/navigation.ejs') %>
+	<content>
 
-		<% for (let i = 0; i<liked_content.length;i++) {%>
+		<h1><%- email%>'s profile </h1>
+		Liked content<ul>
+
+			<% for (let i = 0; i<liked_content.length;i++) {%>
 			<li><a href="/content/<%- liked_content[i].content_id%>"><%- liked_content[i].title%></a></li>
 			<%  }%>
 		</ul>
-	Disiked content<ul>
+		Disiked content<ul>
 
-		<% for (let i = 0; i<disliked_content.length;i++) {%>
+			<% for (let i = 0; i<disliked_content.length;i++) {%>
 			<li><a href="/content/<%- disliked_content[i].content_id%>"><%- disliked_content[i].title%></a></li>
 			<%  }%>
 		</ul>
+	</content>
 
 
-<%- include('../includes/end.ejs') %>
+	<%- include('../includes/end.ejs') %>

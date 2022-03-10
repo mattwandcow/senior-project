@@ -3,38 +3,29 @@
 
 <body>
 	<%- include('../includes/navigation.ejs') %>
-	<content>
+	
 	<h1>Welcome to the project</h1>
-
-		<form action="/search" method="POST">
-			<label>
-				Search
-				<input type="text" name="search">
-			</label>
-			<button type="submit">Search</button>
-		</form>
-		
-		<h2>Results </h2>
-	</content>
 	<div id="rate_page">
-	<%if(content.length == 0) {%>
-	<p>No results found</p>
-	<%}else{%>
+
+		<% if(content){%>
+			<%-content.title %>
 		<% for (let i = 0; i<content.length;i++) {%>
-			<%- include('../includes/content_card.ejs',{card_source: content[i]}) %>
-			<%  }%>
-		</ul>
-	<%}%>
-	</div>
+		<% let card_source = content[i]%>
+		<%- include('../includes/content_card.ejs',{card_source: card_source}) %>
+		<% }} %>
+
+		</div>
 	<script>
 		function rate_button(contentID, marker) {
-			console.log(":"+contentID+":");
-			fetch('/shorthand/rate/'+contentID+'/'+marker)
-			var src='card_id_'+contentID
+			console.log(":" + contentID + ":");
+			fetch('/shorthand/rate/' + contentID + '/' + marker)
+			var src = 'card_id_' + contentID
 			console.log(src);
-			document.getElementById(src).innerHTML="Rating Logged!"
+			document.getElementById(src).innerHTML = "Rating Logged!"
 		}
 	</script>
+
+
 <footer style="position: relative;">
 	<p>This site was built in 2022 for Matt Wilson's Senior project. 
 		It was built using Node.js, Express and PostgresSql. 

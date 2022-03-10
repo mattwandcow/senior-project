@@ -1,4 +1,6 @@
 <div class="content_card">
+	<img src="images/<%- card_source.image_url %>">
+
 	<span><a href="/content/<%- card_source.content_id%>"><%- card_source.title %></a></span>
 	<% if(user_id){ %>
 	<div class="button_box" id="card_id_<%- card_source.content_id%>">

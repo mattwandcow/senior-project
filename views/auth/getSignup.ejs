@@ -3,8 +3,10 @@
 
 <body>
 	<%- include('../includes/navigation.ejs') %>
-	<form action="/signup" method="POST">
-		<label for="email">
+	<content>
+
+		<form action="/signup" method="POST">
+			<label for="email">
 			Email:
 			<input type="email" name="email">
 		</label>
@@ -12,13 +14,14 @@
 			Password:
 			<input type="password" name="pass">
 		</label>
-		</label>
-		<label for="passconfirm">
-			Confirm Password:
+	</label>
+	<label for="passconfirm">
+		Confirm Password:
 			<input type="password" name="passconfirm">
 		</label>
-		<button type="submit">Log In</button>
+		<button type="submit">Register</button>
 	</form>
 	<p>Already have an account? Click here to <a href="/login">login</a></p>
-
+</content>
+	
 	<%- include('../includes/end.ejs') %>

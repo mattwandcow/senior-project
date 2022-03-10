@@ -3,6 +3,7 @@
 
 <body>
 	<%- include('../includes/navigation.ejs') %>
+	<content>
 	<% if(wave_content.length==0 && zero_content.length==0){%>
 		<p>Something went wrong. Either there was an error with the database, or we don't have any recomendations for you. Sorry!</p>
 	<% } else {%>
@@ -35,4 +36,5 @@
 	</p>
 
 	<% }} %>
+	</content>
 	<%- include('../includes/end.ejs') %>

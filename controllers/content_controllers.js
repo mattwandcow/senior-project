@@ -19,38 +19,38 @@ exports.getSingleContent = (req, res, next) => {
 	console.log(contentID);
 	var user = req.session.user_id;
 	if (!req.session.user_id) {
-		user=0;
+		user = 0;
 	}
 	var query = {
 		text: 'select * from get_single_content($1,$2)',
 		values: [contentID, user]
 	}
 
-console.log(query);
-pool.connect((err, client, release) => {
-	if (err) {
-		return console.error('Error acquiring client', err.stack)
-	}
-
-	client.query(query, (err, resp) => {
-		release()
+	console.log(query);
+	pool.connect((err, client, release) => {
 		if (err) {
-			res.render('content/contentError', {
-				pageTitle: 'Matt Senior Project',
-				path: '/'
-			});
-			return console.error('Error executing query', err.stack)
+			return console.error('Error acquiring client', err.stack)
 		}
-		console.log(resp.rows);
 
-		res.render('content/singleContent', {
-			pageTitle: 'Matt Senior Project',
-			path: '/',
-			content: resp.rows[0],
-			user: req.session.user
-		});
+		client.query(query, (err, resp) => {
+			release()
+			if (err) {
+				res.render('content/contentError', {
+					pageTitle: 'Matt Senior Project',
+					path: '/'
+				});
+				return console.error('Error executing query', err.stack)
+			}
+			console.log(resp.rows);
+
+			res.render('content/singleContent', {
+				pageTitle: 'Matt Senior Project',
+				path: '/',
+				content: resp.rows[0],
+				user: req.session.user
+			});
+		})
 	})
-})
 
 
 };
@@ -230,6 +230,41 @@ exports.getRecommendations = (req, res, next) => {
 				path: '/',
 				wave_content: wave_arr,
 				zero_content: zero_arr,
+				user: req.session.user
+			});
+		})
+	})
+}
+exports.getRate = (req, res, next) => {
+	console.log("Trace: Arrived at Rate Page");
+
+	var user = req.session.user_id;
+	if (!req.session.user_id) {
+		res.redirect('/login');
+	}
+	var query = {
+		text: 'select * from get_rate_page($1)',
+		values: [user]
+	}
+	pool.connect((err, client, release) => {
+		if (err) {
+			return console.error('Error acquiring client', err.stack)
+		}
+		client.query(query, (err, resp) => {
+			release()
+			if (err) {
+				res.render('content/contentError', {
+					pageTitle: 'Matt Senior Project',
+					path: '/'
+				});
+				return console.error('Error executing query', err.stack)
+			}
+			//console.log(resp.rows);
+
+			res.render('content/rate', {
+				pageTitle: 'Matt Senior Project',
+				path: '/',
+				content: resp.rows,
 				user: req.session.user
 			});
 		})

@@ -1,21 +1,10 @@
 <%- include('../includes/head.ejs') %>
 
 <script>
-	function rate_button(user, contentID, marker) {
-		console.log(":" + contentID + ":");
-		console.log(":" + user + ":");
-		switch (marker) {
-			case 1:
-				fetch('/shorthand/rate/' + contentID + '/' + user + '/1')
-				break;
-			case 2:
-				fetch('/shorthand/rate/' + contentID + '/' + user + '/2')
-				break;
-			case 3:
-				fetch('/shorthand/rate/' + contentID + '/' + user + '/3')
-				break;
-		}
-		console.log('/shorthand/rate/' + contentID + '/' + user + '/');
+	function rate_button(marker) {
+		fetch('/shorthand/rate/'+'<%- content.content_id %>'+'/'+marker)
+		var src='content_card'
+		document.getElementById(src).innerHTML="Rating Logged!"
 	}
 </script>
 
@@ -24,52 +13,49 @@
 <body>
 	<%- include('../includes/navigation.ejs') %>
 	<content>
-	<h2><%- content.title %></h2>
-	<% if(content.image_url) {%>
+		<h2><%- content.title %></h2>
+		<% if(content.image_url) {%>
 
-	<img class="single_content_image" src="/images/<%-content.image_url%>">
-	<% } %>
+		<img class="single_content_image" src="/images/<%-content.image_url%>">
+		<% } %>
 
-	<% if(content.details) {%>
-	<p><%-content.details %></p>
-	<% } %>
-	<% if(content.rating) { //that means the user has already judged this%>
+		<% if(content.details) {%>
+		<p><%-content.details %></p>
+		<% } %>
+		<% if(content.rating) { //that means the user has already judged this%>
 		<% if(content.rating==1) {%>
-			<p>You marked this content as something you enjoyed!</p>
-			<% } else if (content.rating==3)  {%>
-			<p>You marked this content as something you didn't enjoy.</p>
+		<p>You marked this content as something you enjoyed!</p>
+		<% } else if (content.rating==3)  {%>
+		<p>You marked this content as something you didn't enjoy.</p>
 		<% } %>
-	<% }%>
-	<% if(user_id){ %>
-		<div class="content_card">
-		<button
-			class="rating <% if(content.rating==1) {%>pressed<%}%>" onClick="rate_button( '<%- user %>','<%- content.content_id %>',1)">Up</button>
-		<button
-			class="rating <% if(content.rating==2) {%>pressed<%}%>" onClick="rate_button( '<%- user %>','<%- content.content_id %>',2)">Neutral</button>
-		<button
-			class="rating <% if(content.rating==3) {%>pressed<%}%>" onClick="rate_button( '<%- user %>','<%- content.content_id %>',3)">Down</button>
-			</div>
+		<% }%>
+		<% if(user_id){ %>
+		<div class="content_card" id="content_card">
+			<button onClick="rate_button(1)">Up</button>
+			<button onClick="rate_button(2)">Neutral</button>
+			<button onClick="rate_button(3)">Down</button>
+		</div>
 		<% } %>
-	<% if(content.wz_rating) { //means that there is a rating in the system%>
+		<% if(content.wz_rating) { //means that there is a rating in the system%>
 
-	<p>Our users have given <%- content.title %> a general rating of <%- (content.wz_rating*100).toFixed(2) %>.
-		<% if(content.wl_rating) { //means that there is a rating in the system%>
-		<p>Your wavelength has given it a more focused rating of <%- (content.wl_rating*100).toFixed(2) %>.
+		<p>Our users have given <%- content.title %> a general rating of <%- (content.wz_rating*100).toFixed(2) %>.
+			<% if(content.wl_rating) { //means that there is a rating in the system%>
+			<p>Your wavelength has given it a more focused rating of <%- (content.wl_rating*100).toFixed(2) %>.
+				<% } %>
+			</p>
+			<% } else { //no rating%>
+			<p>This content has not yet been reviewed by our users.</p>
 			<% } %>
-		</p>
-		<% } else { //no rating%>
-		<p>This content has not yet been reviewed by our users.</p>
-		<% } %>
-		<% if (isAdmin) { %>
+			<% if (isAdmin) { %>
 
-		<p><a href="../editcontent/<%-content.content_id%>">Edit this</a></p>
-		<p><a href="../add-image/<%-content.content_id%>">Add/Change Image</a></p>
-		<% } %>
+			<p><a href="../editcontent/<%-content.content_id%>">Edit this</a></p>
+			<p><a href="../add-image/<%-content.content_id%>">Add/Change Image</a></p>
+			<% } %>
 
-		</content>
-		<footer style="position: relative;">
-			<p>This site was built in 2022 for Matt Wilson's Senior project. 
-				It was built using Node.js, Express and PostgresSql. 
-				It is hosted on Heroku and <a href="https://github.com/mattwandcow/senior-project">Github</a></p>
-		</footer>
-		</body>
+	</content>
+	<footer style="position: relative;">
+		<p>This site was built in 2022 for Matt Wilson's Senior project.
+			It was built using Node.js, Express and PostgresSql.
+			It is hosted on Heroku and <a href="https://github.com/mattwandcow/senior-project">Github</a></p>
+	</footer>
+</body>

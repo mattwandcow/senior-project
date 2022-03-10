@@ -6,9 +6,19 @@
 	<content>
 
 		<% if(content=='blank') {%>
-			<h1>Welcome to the project</h1>
+			<h1>Welcome to the Wavelength Recemnendations</h1>
 			<%}else{%>
 				<%- include('../includes/banner_picks.ejs') %>
 				<%}%>
+				<h2>How to use this site</h2>
+				<p>Any visitor to the site can click on <a href="/recommendations">Recommendations</a> and get a list of
+				content items that have a high like ratio from the general reviews of all members of the site. Creating a
+				user account and logging in enables you to rate content items, which places you in a wavelength. Recommendations
+				then may review more targeted results, provided there are enough people on your wavelength to provide useful
+				recomendations.
+				Search can be useful in finding a specific content item, and clicking on the title of a content item brings you to
+				a page with more information on that individual content piece. If you are logged in, the option to see your profile
+				will show what you've rated so far. 
+			</p>
 	</content>
 <%- include('../includes/end.ejs') %>

@@ -3,6 +3,7 @@
 
 <body>
 	<%- include('../includes/navigation.ejs') %>
+	<content>
 	<form action="/login" method="POST">
 		<label for="email">
 			Email
@@ -15,5 +16,5 @@
 		<button type="submit">Log In</button>
 	</form>
 	<p>No account yet? Click here to <a href="/signup">sign up</a></p>
-
+</content>
 	<%- include('../includes/end.ejs') %>
