@@ -16,6 +16,9 @@
 				<td>
 					Like Ratio
 				</td>
+				<td>
+					Image
+				</td>
 			</thead>
 			<tbody>
 
@@ -30,6 +33,10 @@
 						<%- parseFloat((content[i].like_count/content[i].count)*100).toFixed(2) +"%" %>
 						<% }%>
 					</td>
+					<td>
+						<img class="view-content" src="/images/<%- content[i].image_url%>">
+					</td>
+					
 				</tr>
 				<%  }%>
 			</tbody>
