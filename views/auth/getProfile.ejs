@@ -6,19 +6,34 @@
 	<content>
 
 		<h1><%- email%>'s profile </h1>
-		Liked content<ul>
+		<div>
 
-			<% for (let i = 0; i<liked_content.length;i++) {%>
-			<li><a href="/content/<%- liked_content[i].content_id%>"><%- liked_content[i].title%></a></li>
-			<%  }%>
-		</ul>
-		Disiked content<ul>
+			<h2>
+				Liked content
+			</h2>
+			<ul>
 
-			<% for (let i = 0; i<disliked_content.length;i++) {%>
-			<li><a href="/content/<%- disliked_content[i].content_id%>"><%- disliked_content[i].title%></a></li>
-			<%  }%>
-		</ul>
+				<% for (let i = 0; i<liked_content.length;i++) {%>
+				<li><a href="/content/<%- liked_content[i].content_id%>"><%- liked_content[i].title%></a></li>
+				<%  }%>
+			</ul>
+			<h2>
+				Disiked content
+			</h2>
+			<ul>
+
+				<% for (let i = 0; i<disliked_content.length;i++) {%>
+				<li><a href="/content/<%- disliked_content[i].content_id%>"><%- disliked_content[i].title%></a></li>
+				<%  }%>
+			</ul>
+		</div>
+
 	</content>
 
 
-	<%- include('../includes/end.ejs') %>
+	<footer style="position: relative;">
+		<p>This site was built in 2022 for Matt Wilson's Senior project.
+			It was built using Node.js, Express and PostgresSql.
+			It is hosted on Heroku and <a href="https://github.com/mattwandcow/senior-project">Github</a></p>
+	</footer>
+</body>
