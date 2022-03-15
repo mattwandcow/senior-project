@@ -19,6 +19,9 @@
 				<td>
 					Image
 				</td>
+				<td>
+					Description
+				</td>
 			</thead>
 			<tbody>
 
@@ -35,6 +38,11 @@
 					</td>
 					<td>
 						<img class="view-content" src="/images/<%- content[i].image_url%>">
+					</td>
+					<td>
+						<% if(content[i].details) {%>
+							<%- content[i].details.substring(0,50) +'...'%>
+							<%  }%>
 					</td>
 					
 				</tr>

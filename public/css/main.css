@@ -179,3 +179,38 @@ td {
 .view-content{
 	max-height: 60px;
 }
+.btn_delay{
+	border: 0;
+	background: none;	
+	background-image: url(/images/delay.png);
+  	background-repeat: no-repeat;
+	height: 50px;
+	width: 50px;
+}
+.btn_down{
+	border: 0;
+	background: none;	
+	background-image: url(/images/downvote.png);
+  	background-repeat: no-repeat;
+	height: 50px;
+	width: 50px;
+}
+.btn_up{
+	border: 0;
+	background: none;	
+	background-image: url(/images/upvote.png);
+  	background-repeat: no-repeat;
+	height: 50px;
+	width: 50px;
+}
+.btn_null{
+	border: 0;
+	background: none;	
+	background-image: url(/images/nullvote.png);
+  	background-repeat: no-repeat;
+	height: 50px;
+	width: 50px;
+}
+.btn_up:hover,.btn_delay:hover,.btn_down:hover,.btn_null:hover{
+	border: solid 1px grey;
+}

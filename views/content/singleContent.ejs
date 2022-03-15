@@ -31,9 +31,9 @@
 		<% }%>
 		<% if(user_id){ %>
 		<div class="content_card" id="content_card">
-			<button onClick="rate_button(1)">Up</button>
-			<button onClick="rate_button(2)">Neutral</button>
-			<button onClick="rate_button(3)">Down</button>
+			<button class="btn_up"  onClick="rate_button(1)" title="Upvote Content" alt="Upvote Content"></button>
+			<button class="btn_null"  onClick="rate_button(2)" alt="Unrate Content" title="Unrate Content"></button>
+			<button class="btn_down"  onClick="rate_button(3)" alt="Downvote Content" title="Downvote Content"></button>
 		</div>
 		<% } %>
 		<% if(content.wz_rating) { //means that there is a rating in the system%>

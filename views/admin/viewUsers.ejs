@@ -39,8 +39,8 @@
 	<% for (let i = 0; i<users.length;i++) {%>
 		<tr>
 			<td> <%- users[i].user_id %></a></td>
-			<td> <%- users[i].email %></a></td>
-			<td> <%- users[i].wavelength %> </td>
+			<td> <a href="../user/<%- users[i].user_id %>"><%- users[i].email %></a></td>
+			<td> <a href="../wave/<%- users[i].wavelength_id%>">Wavelength: <%- users[i].wavelength%></a></td>
 			<td> <%- parseFloat(users[i].wave_sync*100).toFixed(2) %> </td>
 			<td> <%- users[i].review_count %> </td>
 			<td> <%- parseFloat(users[i].review_average*100).toFixed(2) %> </td>

@@ -4,11 +4,11 @@
 	<span><a href="/content/<%- card_source.content_id%>"><%- card_source.title %></a></span>
 	<% if(user_id){ %>
 	<div class="button_box" id="card_id_<%- card_source.content_id%>">
-		<button onClick="rate_button('<%- card_source.content_id %>',1)">Up</button>
+		<button class="btn_up" onClick="rate_button('<%- card_source.content_id %>',1)" title="Upvote Content" alt="Upvote Content"></button>
 		<% if(true){ %>
-		<button onClick="rate_button('<%- card_source.content_id %>',4)">Delay</button>
+		<button class="btn_delay" onClick="rate_button('<%- card_source.content_id %>',4)" alt="Delay Rating Content" title="Delay Rating Content"></button>
 			<% } %>
-		<button onClick="rate_button('<%- card_source.content_id %>',3)">Down</button>
+		<button class="btn_down" onClick="rate_button('<%- card_source.content_id %>',3)" alt="Downvote Content" title="Downvote Content"></button>
 	</div>
 	<% } %>
 </div>

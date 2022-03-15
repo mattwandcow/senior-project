@@ -1,0 +1,44 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+	<%- include('../includes/navigation.ejs') %>
+<content>
+
+	<h2>
+		User Details
+	</h2>
+
+	<p>Email: <%- user.email%></p>
+	<p><a href="../wave/<%- user.wavelength_id%>">Wavelength: <%- user.wavelength_id%></a> </p>
+		<h2>
+		<%-ratings.length%> Items Rated
+	</h2>
+	<table>
+		<thead>
+			<td>Content</td>
+			<td>Rating</td>
+		</thead>
+		<tbody>
+			<% for (let i = 0; i<ratings.length;i++) {%>
+				<tr>
+					
+					<td><a href="../content/<%-ratings[i].content_id%>"><%- ratings[i].title %></a></td>
+					<td><%-ratings[i].rating%></td>
+				</tr>
+			<% } %>
+		</tbody>
+	</table>
+	
+	
+	
+</content>
+<script src="/js/main.js"></script>
+<footer style="position: relative;">
+	<p>This site was built in 2022 for Matt Wilson's Senior project. 
+		It was built using Node.js, Express and PostgresSql. 
+		It is hosted on Heroku and <a href="https://github.com/mattwandcow/senior-project">Github</a></p>
+</footer>
+</body>
+
+</html>
