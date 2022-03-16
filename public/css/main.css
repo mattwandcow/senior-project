@@ -14,7 +14,7 @@ a {
 }
 
 a:hover {
-	color: whitesmoke;
+	color: grey;
 	text-decoration: underline;
 
 }
@@ -34,7 +34,9 @@ header>a {
 	display: flex;
 	justify-content: center;
 }
-
+#topbar>span>a:hover,nav>a:hover,footer>p>a:hover {
+	color: whitesmoke;
+}
 nav {
 	display: flex;
 	justify-content: space-evenly;
@@ -53,7 +55,7 @@ content {
 	justify-content: center;
 	align-items: center;
 	padding-bottom: 2.5 rem;
-	max-width: 1200px;
+	max-width: 70%;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -67,8 +69,9 @@ content {
 
 }
 content>p{
-	width: 400px;
+	width: 80%;
 	text-indent: 7px;
+	font-size: 1.15em;
 }
 
 content>h1,
