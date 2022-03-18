@@ -1,9 +1,13 @@
+html{
+	height: 100%;
+}
 body {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	flex-wrap: wrap;
 	margin: 0;
+	background-color: #eaf2ef;
+	height: 100%;
 }
 
 a {
@@ -50,6 +54,7 @@ nav>span {
 }
 
 content {
+	flex: 1 0 auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -109,7 +114,7 @@ section {
 	display: flex;
 }
 
-form>input,
+input,
 textarea,
 label,
 button {
@@ -117,7 +122,7 @@ button {
 	margin-left: 15px;
 }
 
-form>label {
+label {
 	margin-top: 7px;
 	padding: 7px;
 }
@@ -136,15 +141,10 @@ form>label {
 }
 
 footer {
-	min-height: 50px;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	flex-basis: 100%;
+	flex-shrink: 0;
 	width: 100%;
 	text-align: center;
 	background-color: cadetblue;
-	margin-top: auto;
 }
 #footer-rel {
 	min-height: 50px;

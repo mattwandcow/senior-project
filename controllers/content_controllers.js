@@ -144,7 +144,7 @@ exports.postSearch = (req, res, next) => {
 		if (err) {
 			return console.error('Error acquiring client', err.stack)
 		}
-		client.query("SELECT * from content where lower(title) like lower('%" + search + "%')", (err, resp) => {
+		client.query("SELECT * from content where lower(title) like lower('%" + search + "%') or lower(details) like lower('%" + search + "%')", (err, resp) => {
 			release()
 			if (err) {
 				res.render('content/contentError', {

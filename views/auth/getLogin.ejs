@@ -4,17 +4,20 @@
 <body>
 	<%- include('../includes/navigation.ejs') %>
 	<content>
-	<form action="/login" method="POST">
-		<label for="email">
-			Email
-			<input type="email" name="email">
-		</label>
-		<label for="pass">
-			Password
-			<input type="password" name="pass">
-		</label>
-		<button type="submit">Log In</button>
-	</form>
-	<p>No account yet? Click here to <a href="/signup">sign up</a></p>
-</content>
+		<% if (errorMessage) { %>
+		<%- errorMessage %>
+		<% } %>
+		<form action="/login" method="POST">
+			<label for="email">
+				Email
+				<input type="email" name="email">
+			</label>
+			<label for="pass">
+				Password
+				<input type="password" name="pass">
+			</label>
+			<button type="submit">Log In</button>
+		</form>
+		<p>No account yet? Click here to <a href="/signup">sign up</a></p>
+	</content>
 	<%- include('../includes/end.ejs') %>

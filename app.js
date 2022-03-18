@@ -3,7 +3,7 @@ const http = require('http'); // imported for creating a server
 
 const express = require('express');
 const session = require('express-session');
-
+const flash = require("connect-flash");
 const dotenv = require('dotenv');
 dotenv.config();
 const PORT = process.env.PORT || 5000; //Run on Port variable, or 5000
@@ -41,7 +41,7 @@ app.use(
 		}
 	})
 )
-
+app.use(flash());
 app.use((req, res, next) => {
 	// Used for user authentication. Can reuse later.
 	res.locals.isAuthenticated = req.session.isLoggedIn;

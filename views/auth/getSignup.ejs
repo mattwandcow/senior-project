@@ -4,7 +4,9 @@
 <body>
 	<%- include('../includes/navigation.ejs') %>
 	<content>
-
+		<% if (errorMessage) { %>
+			<%- errorMessage %>
+			<% } %>
 		<form action="/signup" method="POST">
 			<label for="email">
 			Email:

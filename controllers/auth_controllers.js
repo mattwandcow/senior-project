@@ -14,9 +14,18 @@ var pool = new Pool({
 exports.getLogin = (req, res, next) => {
 	console.log("Trace: Arrived at Login Get Page");
 
+	let message = req.flash('error');
+	if (message.length > 0) {
+		message = message[0];
+		console.log("We had errors: " + message);
+	} else {
+		message = null;
+	}
+
 	res.render('auth/getLogin', {
 		pageTitle: 'Matt Senior Project',
-		path: '/'
+		path: '/',
+		errorMessage: message
 	});
 };
 exports.getLogout = (req, res, next) => {
@@ -30,9 +39,18 @@ exports.getLogout = (req, res, next) => {
 
 exports.getSignup = (req, res, next) => {
 	console.log("Trace: Arrived at Sign Get Page");
+	console.log(req.flash);
+	let message = req.flash('error');
+	if (message.length > 0) {
+		message = message[0];
+		console.log("We had errors: " + message);
+	} else {
+		message = null;
+	}
 	res.render('auth/getSignup', {
 		pageTitle: 'Matt Senior Project',
-		path: '/'
+		path: '/',
+		errorMessage: message
 	});
 };
 exports.postLogin = (req, res, next) => {
@@ -60,8 +78,6 @@ exports.postLogin = (req, res, next) => {
 						req.session.isAdmin = false;
 					req.session.user = email;
 					req.session.user_id = resp.rows[0].user_id;
-
-
 					return req.session.save(err => {
 						console.log("Session Save Error:" + err);
 						console.log("Saved Session");
@@ -71,14 +87,16 @@ exports.postLogin = (req, res, next) => {
 					console.log("Password Mismatch?");
 					res.render('auth/getLogin', {
 						pageTitle: 'Matt Senior Project',
-						path: '/'
+						path: '/',
+						errorMessage: '<div class="user-message user-message--error"><p>Incorrect Password</p></div>'
 					});
 				}
 			} else {
 				console.log("No such user in DB");
 				res.render('auth/getLogin', {
 					pageTitle: 'Matt Senior Project',
-					path: '/'
+					path: '/',
+					errorMessage: '<div class="user-message user-message--error"><p>Username not found</p></div>'
 				});
 			}
 		})
@@ -97,12 +115,13 @@ exports.postSignup = (req, res, next) => {
 		console.log("Password Mismatch at signup");
 		res.render('auth/getSignup', {
 			pageTitle: 'Matt Senior Project',
-			path: '/'
+			path: '/',
+			errorMessage: '<div class="user-message user-message--error"><p>Passwords did not match</p></div>'
 		});
 	} else {
 		var query = {
 			text: 'call create_user($1,$2)',
-			values: [email,pass]
+			values: [email, pass]
 		}
 		//first, lets check that we're unique
 		pool.connect((err, client, release) => {
@@ -114,7 +133,8 @@ exports.postSignup = (req, res, next) => {
 				if (err) {
 					return console.error('Error executing query', err.stack)
 				}
-							res.redirect('/login');
+				req.flash('error', '<div class="user-message"><p>Successfully signed up! Please login:</p></div>')
+				res.redirect('/login');
 
 			})
 		})
@@ -190,8 +210,7 @@ exports.getViewContent = (req, res, next) => {
 exports.getProfile = (req, res, next) => {
 	console.log("Trace: Arrived at View Profile");
 	const email = res.locals.email
-	if (!email)
-	{
+	if (!email) {
 		res.redirect('/login');
 		return;
 	}
@@ -244,7 +263,7 @@ exports.getViewUsers = (req, res, next) => {
 				users: resp.rows
 			});
 
-		}) 
+		})
 	})
 
 }
