@@ -1,4 +1,5 @@
 const session = require('express-session');
+const { redirect } = require('express/lib/response');
 
 const {
 	Pool
@@ -207,6 +208,7 @@ exports.getViewContent = (req, res, next) => {
 
 };
 
+
 exports.getProfile = (req, res, next) => {
 	console.log("Trace: Arrived at View Profile");
 	const email = res.locals.email
@@ -242,6 +244,36 @@ exports.getProfile = (req, res, next) => {
 		})
 	})
 
+}
+exports.getAllRate = (req, res, next) => {
+	console.log("Trace: Arrived at get All Profile");
+	if(!req.session.user_id)
+	{
+		res.redirect('/login');
+		return;
+	}
+	var query ={
+		text: 'select * from get_all_rate($1)',
+		values: [req.session.user_id]
+				}
+	pool.connect((err, client, release) => {
+		if (err) {
+			return console.error('Error acquiring client', err.stack)
+		}
+
+		console.log(query);
+		client.query(query, (err, resp) => {
+			release()
+			if (err) {
+				return console.error('Error executing query', err.stack)
+			}
+			res.render('auth/getAllRate', {
+				pageTitle: 'Matt Senior Project',
+				path: '/',
+				content: resp.rows
+			});
+		})
+	})
 }
 exports.getViewUsers = (req, res, next) => {
 	console.log("Trace: Arrived at View Users");

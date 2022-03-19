@@ -1,0 +1,49 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+	<%- include('../includes/navigation.ejs') %>
+	<content>
+		<table>
+			<thead>
+				<td>
+					Title
+				</td>
+				<td>
+					Personal Rating
+				</td>
+				<td>
+					Wave Rating
+				</td>
+				<td>
+					Wave Rating
+				</td>
+				<td>
+					Image
+				</td>
+			</thead>
+			<tbody>
+
+				<% for (let i = 0; i<content.length;i++) {%>
+				<tr>
+					<td><a href="../content/<%-content[i].content_id%>"><%- content[i].title %></a></td>
+					<td>
+						<%- content[i].personal_rating%>
+					</td>
+					<td>
+						<%- content[i].wave_rating%>
+					</td>
+					</td>
+					<td>
+						<%- content[i].zero_rating%>
+					</td>
+					<td>
+						<img class="view-content" src="/images/<%- content[i].image_url%>">
+					</td>
+				</tr>
+				<%  }%>
+			</tbody>
+		</table>
+	</content>
+
+	<%- include('../includes/end.ejs') %>
