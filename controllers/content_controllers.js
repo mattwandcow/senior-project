@@ -270,3 +270,36 @@ exports.getRate = (req, res, next) => {
 		})
 	})
 }
+exports.getRecommendationsRebuild = (req, res, next) => {
+	console.log("Trace: Arrived at View Recc(2)");
+	var call_str = "";
+	var page_target = 'content/reccRebuild';
+	if (req.session.user_id) {
+		console.log("--User " + req.session.user_id + " found");
+		call_str = "select * from get_recommendations(" + req.session.user_id + ");";
+	} else {
+		console.log("--No user found");
+		call_str = "select * from get_recommendations(-1);";
+	}
+	pool.connect((err, client, release) => {
+		if (err) {
+			return console.error('Error acquiring client', err.stack)
+		}
+		client.query(call_str, (err, resp) => {
+			release()
+			if (err) {
+				res.render('content/contentError', {
+					pageTitle: 'Matt Senior Project',
+					path: '/'
+				});
+				return console.error('Error executing query', err.stack)
+			}
+			res.render(page_target, {
+				pageTitle: 'Matt Senior Project',
+				path: '/',
+				content: resp.rows,
+				user: req.session.user
+			});
+		})
+	})
+}

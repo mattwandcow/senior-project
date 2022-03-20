@@ -1,0 +1,17 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+	<%- include('../includes/navigation.ejs') %>
+	<content>
+		<div id="recc_card_holder">
+		<% console.log(content.length) %>
+		<% if(content.length==1) {%>
+			<p>No content to recommend.</p>
+		<%}else{%>
+		<% for (let i = 0; i<content.length-1;i++){	%>
+			<%- include('../includes/recc_card.ejs',{card_source: content[i]}) %>
+		<%}}%>
+		</div>
+	</content>
+<%- include('../includes/end.ejs') %>

@@ -10,7 +10,8 @@ router.get('/search',  contentController.getSearch);
 router.post('/search',  contentController.postSearch);
 router.post('/editcontent/:contentID',  contentController.postEditContent);
 router.get('/waves',  contentController.getViewWaves);
-router.get('/recommendations',  contentController.getRecommendations);
+//router.get('/recommendations',  contentController.getRecommendations);
+router.get('/recommendations',  contentController.getRecommendationsRebuild);
 router.get('/rate',  contentController.getRate);
 
 module.exports = router;

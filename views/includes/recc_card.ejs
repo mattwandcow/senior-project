@@ -1,0 +1,25 @@
+<% if(card_source.content_id%2==0){ %>
+	<div class="recc_card">
+<% }else{%>
+	<div class="recc_card mirror">
+<%}%>
+		<img class="recc_image" src="/images/<%-card_source.image_url%>" alt="<%card_source.title%>">
+		<div>
+			<h2><a href="content/<%-card_source.content_id%>"><%-card_source.title%></a></h2>
+			<% if(card_source.wave_percent!="No Wave Estimate") {%>
+			<div class="recc_pair_text">
+				<h3>Estimates</h3>
+				<p>
+					Wave: <%-card_source.wave_percent%>
+				</p>
+				<p>
+					All Users: <%-card_source.zero_percent%>
+				</p>
+			</div>
+			<%}else{%>
+			<p class="recc_solo_text">
+				Estimate: <%- card_source.zero_percent%>%
+			</p>
+			<%}%>
+		</div>
+	</div>

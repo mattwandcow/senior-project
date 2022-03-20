@@ -216,3 +216,36 @@ td {
 .btn_up:hover,.btn_delay:hover,.btn_down:hover,.btn_null:hover{
 	border: solid 1px grey;
 }
+
+#recc_card_holder{
+	display: flex;
+	flex-wrap: wrap;
+}
+.recc_image{
+	max-width: 150px;
+}
+.recc_card{
+	background-color: #dfe2ff;
+	width: 400px;
+	display: flex;
+	justify-content: space-around;
+	align-content:center;
+	margin: 7px;
+}
+.recc_pair_text{
+	font-size: 1.1em;
+	margin: 7px;
+	width: 225px;
+	border-top: solid 1px cadetblue;
+}
+.recc_pair_text>h3{
+	text-decoration: underline;
+	padding-left: 0px;
+}
+.recc_pair_text>p{
+	padding-left: 10px;
+}
+.recc_solo_text{
+	font-size: 1.1em;
+	text-align: center;
+}
