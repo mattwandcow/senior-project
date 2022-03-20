@@ -191,7 +191,7 @@ exports.getViewContent = (req, res, next) => {
 		if (err) {
 			return console.error('Error acquiring client', err.stack)
 		}
-		var query_str = "select c.content_id, title, image_url, details, count(r.content_id) as count, (select count(*) from reviews r2 where r2.content_id=c.content_id and r2.value=1) as like_count from content c full outer join reviews r on r.content_id=c.content_id group by r.content_id, c.content_id, title, image_url order by title asc";
+		var query_str = "select c.content_id, title, image_url, type, details, count(r.content_id) as count, (select count(*) from reviews r2 where r2.content_id=c.content_id and r2.value=1) as like_count from content c full outer join reviews r on r.content_id=c.content_id group by r.content_id, c.content_id, title, image_url order by title asc";
 		client.query(query_str, (err, resp) => {
 			release()
 			if (err) {

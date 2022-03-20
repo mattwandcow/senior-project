@@ -249,3 +249,6 @@ td {
 	font-size: 1.1em;
 	text-align: center;
 }
+.type_img{
+	max-height: 1em;
+}

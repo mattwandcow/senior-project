@@ -1,7 +1,7 @@
 <div class="content_card">
 	<img src="images/<%- card_source.image_url %>">
 
-	<span><a href="/content/<%- card_source.content_id%>"><%- card_source.title %></a></span>
+	<span><a href="/content/<%- card_source.content_id%>"><%- card_source.title %></a><img src="/images/<%-card_source.type%>.png" alt="<%-card_source.type%>" class="type_img"></span>
 	<% if(user_id){ %>
 	<div class="button_box" id="card_id_<%- card_source.content_id%>">
 		<button class="btn_up" onClick="rate_button('<%- card_source.content_id %>',1)" title="Upvote Content" alt="Upvote Content"></button>

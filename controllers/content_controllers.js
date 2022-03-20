@@ -41,7 +41,7 @@ exports.getSingleContent = (req, res, next) => {
 				});
 				return console.error('Error executing query', err.stack)
 			}
-			console.log(resp.rows);
+			//console.log(resp.rows);
 
 			res.render('content/singleContent', {
 				pageTitle: 'Matt Senior Project',
@@ -61,12 +61,10 @@ exports.getEditContent = (req, res, next) => {
 	console.log("Trace: Arrived at  Get Edit Content Page with a CID of " + cid);
 	if (!req.session.isAdmin) {
 		console.log("Attempted Access of Restricted Page. Rerouting");
-		res.render('auth/getLogin', {
-			pageTitle: 'Matt Senior Project',
-			path: '/'
-		});
+		res.redirect('/login');
 		return;
 	}
+	
 	pool.connect((err, client, release) => {
 		if (err) {
 			return console.error('Error acquiring client', err.stack)
@@ -80,7 +78,7 @@ exports.getEditContent = (req, res, next) => {
 				});
 				return console.error('Error executing query', err.stack)
 			}
-			console.log(resp.rows[0]);
+			//console.log(resp.rows[0]);
 			res.render('content/editContent', {
 				pageTitle: 'Matt Senior Project',
 				path: '/',
@@ -103,6 +101,7 @@ exports.postEditContent = (req, res, next) => {
 	}
 	var cid = req.params.contentID;
 	var title = req.body.title;
+	var type = req.body.type;
 	var details = req.body.details;
 
 	pool.connect((err, client, release) => {
@@ -110,10 +109,10 @@ exports.postEditContent = (req, res, next) => {
 			return console.error('Error acquiring client', err.stack)
 		}
 		var query = {
-			text: 'call edit_content($1,$2,$3,$4)',
-			values: [cid, req.session.user_id, title, details]
+			text: 'call edit_content($1,$2,$3,$4,$5)',
+			values: [cid, req.session.user_id, title, type, details]
 		}
-
+		console.log(query);
 		client.query(query, (err, resp) => {
 			release()
 			if (err) {
