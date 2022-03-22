@@ -39,8 +39,11 @@
 		<% if(content.wz_rating) { //means that there is a rating in the system%>
 
 		<p>Our users have given <%- content.title %> a general rating of <%- (content.wz_rating*100).toFixed(2) %>.
+			
 			<% if(content.wl_rating) { //means that there is a rating in the system%>
 			<p>Your wavelength has given it a more focused rating of <%- (content.wl_rating*100).toFixed(2) %>.
+				<% } else { //no rating%>
+					<%-content.wl_rating%>
 				<% } %>
 			</p>
 			<% } else { //no rating%>

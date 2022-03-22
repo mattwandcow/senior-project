@@ -41,7 +41,7 @@ exports.getSingleContent = (req, res, next) => {
 				});
 				return console.error('Error executing query', err.stack)
 			}
-			//console.log(resp.rows);
+			console.log(resp.rows);
 
 			res.render('content/singleContent', {
 				pageTitle: 'Matt Senior Project',

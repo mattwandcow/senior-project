@@ -22,6 +22,9 @@
 				<td>
 					Description
 				</td>
+				<td>
+					Type
+				</td>
 			</thead>
 			<tbody>
 
@@ -41,14 +44,11 @@
 					</td>
 					<td>
 						<% if(content[i].details) {%>
-							<%- content[i].details.substring(0,50) +'...'%>
-							<%  }%>
+						<%- content[i].details.substring(0,50) +'...'%>
+						<%  }%>
 					</td>
-					
-				</tr>
-				<%  }%>
-			</tbody>
-		</table>
-	</content>
-	
-	<%- include('../includes/end.ejs') %>
+					<td>
+						<%-content[i].type%>
+						<img src="/images/<%-content[i].type%>.png" title="<%-content[i].type%>"
+							alt="<%-content[i].type%>" class="type_img">
+					</td </tr> <%  }%> </tbody> </table> </content> <%- include('../includes/end.ejs') %>

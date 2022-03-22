@@ -250,5 +250,17 @@ td {
 	text-align: center;
 }
 .type_img{
+	margin-left: 5px;
 	max-height: 1em;
+}
+.recc_type_img{
+	height: auto;
+	max-width: 50px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.recc_box{
+	display: flex;
+	flex-direction: column;
+	align-content: center;
 }
