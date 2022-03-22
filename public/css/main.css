@@ -223,6 +223,7 @@ td {
 }
 .recc_image{
 	max-width: 150px;
+	object-fit: contain;
 }
 .recc_card{
 	background-color: #dfe2ff;
